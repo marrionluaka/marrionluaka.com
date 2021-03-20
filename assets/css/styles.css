@@ -1,0 +1,88 @@
+/* global styles */
+* {
+  font-family: "San-Francisco-light";
+}
+
+ul {
+  padding: 0;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: #494749;
+}
+
+a {
+  color: #b2b2b2;
+}
+
+p {
+  line-height: 2.2;
+  font-size: 1rem;
+  color: #ababab;
+}
+@media (min-width: 992px) {
+  p, li {
+    font-size: 1.2rem;
+  }
+}
+
+a:hover {
+  color: initial;
+  text-decoration: none;
+}
+
+li {
+  list-style-type: none;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* container compressor */
+.compressed-container {
+  padding-left: 0;
+  padding-right: 0;
+}
+@media (min-width: 768px){
+  .compressed-container {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+}
+@media (min-width: 992px){
+  .compressed-container {
+    padding-left: 72px;
+    padding-right: 72px;
+  }
+}
+
+/* divider */
+.ml-underline {
+  margin: 32px 0;
+  display: block;
+  background: #efecec;
+  padding: 1px;
+  width: 100px;
+}
+
+/* overlay */
+.overlay {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  scroll-behavior: smooth;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 7;
+  position: fixed;
+  background-color: rgba(255, 255, 255, 0.95);
+}
+
+/* toast style */
+.toast-text {
+  color: #fff;
+}

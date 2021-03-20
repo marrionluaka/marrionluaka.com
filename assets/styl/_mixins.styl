@@ -1,0 +1,22 @@
+$sm =     640px;
+$md =     768px;
+$lg =     1024px;
+$xl =     1280px;
+$twoxl =  1536px;
+
+breakpoint(class)
+    if class == sm
+        @media (min-width: $sm)
+            {block}
+    if class == md
+        @media (min-width: $md)
+            {block}
+    if class == lg
+        @media (min-width: $lg)
+            {block}
+    if class == xl
+        @media (min-width: $xl)
+            {block}
+    if class == twoxl
+        @media (min-width: $twoxl)
+            {block}
