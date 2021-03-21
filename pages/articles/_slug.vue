@@ -62,8 +62,9 @@ import { defineComponent, onMounted, ref, Ref } from '@vue/composition-api'
 
 import { IArticle } from '@/global-types'
 
-import usePrism from '@/hooks/usePrism'
 import useContext from '@/hooks/useContext'
+import useMarkdown from '@/hooks/useMarkdown'
+import usePostLinks from '@/hooks/usePostLinks'
 import useImageZoom from '@/hooks/useImageZoom'
 import useAnchorTitle from '@/hooks/useAnchorTitle'
 import useSmoothScroll from '@/hooks/useSmoothScroll'
@@ -82,12 +83,13 @@ export default defineComponent({
     const articleBody: Ref<HTMLElement | null> = ref(null)
     const articleContent: Ref<HTMLElement | null> = ref(null)
 
-    const { md } = usePrism()
+    const { md } = useMarkdown()
     useImageZoom(articleBody)
     useAnchorTitle(articleBody)
     const { context, repo } = useContext()
     const { progress, setProgress } = useProgressScroll()
     const { smoothScroll } = useSmoothScroll(articleContent)
+    const { prev, next, setPrevNextLinks } = usePostLinks(context.app.$storyapi)
 
     onMounted(async () => {
       try {
@@ -95,10 +97,12 @@ export default defineComponent({
 
         if (!slug) throw new Error('Article not found.')
 
-        const { data: { story } } = await repo.getResourceById({ version: 'published' }, `articles/${slug}`)
+        const { data } = await repo.getResourceById({ version: 'published' }, `articles/${slug}`)
 
-        article.value = story.content
-        publishedAt.value = format(new Date(story.published_at), DATE_FORMAT)
+        await setPrevNextLinks(data.story.uuid)
+
+        article.value = data.story.content
+        publishedAt.value = format(new Date(data.story.published_at), DATE_FORMAT)
         document.addEventListener('scroll', setProgress)
       } catch (e) {
         console.warn(e)
@@ -108,8 +112,8 @@ export default defineComponent({
     })
 
     return {
-      prev: ref(''),
-      next: ref(''),
+      prev,
+      next,
       md,
       article,
       progress,
@@ -263,6 +267,8 @@ export default defineComponent({
 
     >>> pre
       margin-bottom 24px
+      code.hljs
+        padding: 16px 30px 20px
 
     >>> pre, >>> code
       border-radius 5px
