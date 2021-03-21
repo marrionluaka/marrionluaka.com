@@ -1,6 +1,7 @@
 export interface IStory {
   _uid: string
   full_slug: string
+  tag_list: string[]
   content: IArticlePreview
   published_at: string
 }
@@ -14,6 +15,7 @@ export interface IArticlePreview {
 
 export interface IArticle extends IArticlePreview {
   body: object
+  reading_time: string
   intro_paragraph: string
   series?: string
   toc?: string

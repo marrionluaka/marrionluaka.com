@@ -21,7 +21,7 @@
           .transform.scale-75
             svg.w-6.h-6(fill='none' stroke='currentColor' viewbox='0 0 24 24' xmlns='http://www.w3.org/2000/svg')
               path(stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z')
-          p.text-sm(class="md:text-lg") in 7 minutes
+          p.text-sm(class="md:text-lg") {{ article.reading_time || '12 minutes' }}
 
       figure.article-header__image(v-if="article.featured_image")
         .flex.flex-col.justify-center
@@ -36,7 +36,7 @@
       p {{ article.intro_paragraph }}
 
     section.article-series(v-if="article.series")
-      p(v-html="md.render(article.series)")
+      div(v-html="md.render(article.series)")
 
     section.article-table-of-content(v-if="article.toc")
       h3 Table of Content
@@ -171,7 +171,7 @@ export default defineComponent({
     >>> p
       color #494749
     >>> ul, ol
-      @apply pl-10
+      @apply pl-10 space-y-1
     >>> li
       list-style disc
       color #b2b2b2
@@ -196,10 +196,9 @@ export default defineComponent({
         @apply text-2xl
 
     >>> ul, ol
-      @apply pl-8
+      @apply pl-8 space-y-1
 
     >>> li
-      margin-bottom .5rem
       list-style disc
       color #b2b2b2
       text-decoration underline
@@ -222,13 +221,12 @@ export default defineComponent({
       color #3b454e
 
     >>> ul
-      @apply list-disc pl-10
+      @apply list-disc pl-10 space-y-1
 
     >>> ol
       list-style-type decimal
 
     >>> li
-      @apply pb-4
       color #3b454e
       list-style-type inherit
 
@@ -247,7 +245,7 @@ export default defineComponent({
             transform scale(1.55714) translate(-6.42202px, 4.27666px)
 
     >>> h2
-      @apply flex items-center font-medium text-2xl mt-8 pt-8 mb-6
+      @apply flex items-center font-medium text-2xl mt-8 pt-8 mb-3
       +breakpoint('md')
         @apply text-3xl
       a
