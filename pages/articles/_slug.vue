@@ -1,6 +1,6 @@
 <template lang="pug">
 .article.container.my-12.mx-auto.px-4(class="lg:px-52 xl:px-64")
-  ProgressBar(:value="progress")
+  ProgressBar
   div(v-if="isLoading")
     | loading...
   div(v-else-if="article")
@@ -68,7 +68,6 @@ import usePostLinks from '@/hooks/usePostLinks'
 import useImageZoom from '@/hooks/useImageZoom'
 import useAnchorTitle from '@/hooks/useAnchorTitle'
 import useSmoothScroll from '@/hooks/useSmoothScroll'
-import useProgressScroll from '@/hooks/useProgressScroll'
 
 import ProgressBar from '@/components/ProgressBar.vue'
 
@@ -83,11 +82,10 @@ export default defineComponent({
     const articleBody: Ref<HTMLElement | null> = ref(null)
     const articleContent: Ref<HTMLElement | null> = ref(null)
 
-    const { md } = useMarkdown()
     useImageZoom(articleBody)
     useAnchorTitle(articleBody)
+    const { md } = useMarkdown()
     const { context, repo } = useContext()
-    const { progress, setProgress } = useProgressScroll()
     const { smoothScroll } = useSmoothScroll(articleContent)
     const { prev, next, setPrevNextLinks } = usePostLinks(context.app.$storyapi)
 
@@ -103,7 +101,6 @@ export default defineComponent({
 
         article.value = data.story.content
         publishedAt.value = format(new Date(data.story.published_at), DATE_FORMAT)
-        document.addEventListener('scroll', setProgress)
       } catch (e) {
         console.warn(e)
       } finally {
@@ -116,7 +113,6 @@ export default defineComponent({
       next,
       md,
       article,
-      progress,
       isLoading,
       publishedAt,
       articleBody,
