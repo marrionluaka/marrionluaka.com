@@ -1,6 +1,12 @@
 <template lang="pug">
 main
-  div(v-for="article in articles")
+  div(v-for="(article, i) in articles")
+    div(v-if="i === 1")
+      .flex.items-center.py-6
+        div IMG
+        div
+          h2 About Love
+          p I don't want to be without you gurl!
     h2.capitalize.text-2xl popular in {{ article[0] }}
     div(v-for="a in article[1]")
       nuxt-link.block.shadow-lg.rounded.overflow-hidden.max-w-md(

@@ -246,6 +246,7 @@ export default defineComponent({
 
     >>> h2
       @apply flex items-center font-medium text-2xl mt-8 pt-8 mb-3
+      // font-family $san-fran-semi-bold
       +breakpoint('md')
         @apply text-3xl
       a
