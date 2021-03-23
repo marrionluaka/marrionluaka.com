@@ -22,6 +22,11 @@ export interface IArticle extends IArticlePreview {
   _uid: string
 }
 
+export interface IDropdownOption {
+  id: number | string
+  name: string
+}
+
 interface IStoryImage {
   alt: string
   copyright: string

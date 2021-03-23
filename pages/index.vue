@@ -7,7 +7,8 @@ main
         div
           h2 About Love
           p I don't want to be without you gurl!
-    h2.capitalize.text-2xl popular in {{ article[0] }}
+    h2.capitalize.text-2xl Latest posts in {{ article[0] }}
+    nuxt-link(:to="`/articles?category=${article[0]}`") view all -->
     div(v-for="a in article[1]")
       nuxt-link.block.shadow-lg.rounded.overflow-hidden.max-w-md(
         :to="a.full_slug"
@@ -46,12 +47,8 @@ export default defineComponent({
             if (!acc['latest'] || acc['latest'].length < 8)
               setCategory('latest')
 
-            if (!story.tag_list.length) {
-              setCategory('miscellaneous')
-              return acc
-            }
-
-            story.tag_list.forEach(setCategory)
+            if (story.tag_list.length)
+              story.tag_list.forEach(setCategory)
 
             return acc
           }, {}),
