@@ -8,41 +8,30 @@
 </template>
 
 <script lang="ts">
-import { watch, defineComponent, ref, Ref, PropType } from '@vue/composition-api'
+import { defineComponent, ref, Ref, PropType } from '@vue/composition-api'
 
-import { IDropdownOption } from '@/global-types'
 import clickOutside from './directives/click-outside'
 
 export default defineComponent({
   props: {
-    options: {
-      type: Array as PropType<IDropdownOption[]>,
+    currentOption: {
+      type: String as PropType<string>,
       required: true
     }
   },
 
   directives: { clickOutside },
 
-  setup(props) {
+  setup() {
     const isActive: Ref<boolean> = ref(false)
-    const currentOption: Ref<string> = ref('')
 
-    watch(() => props.options, options => (currentOption.value = options[0]?.name))
-
+    const onCloseDropdown = () => (isActive.value = false)
     const toggleActiveState = () => isActive.value = !isActive.value
     const removeActiveState = () => isActive.value && (isActive.value = false)
-
-    const onCloseDropdown = (option: IDropdownOption) => {
-      if (currentOption.value !== option.name) {
-        isActive.value = false
-        currentOption.value = option.name
-      }
-    }
 
     return {
       isActive,
       onCloseDropdown,
-      currentOption,
       removeActiveState,
       toggleActiveState
     }

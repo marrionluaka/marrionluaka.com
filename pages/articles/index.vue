@@ -1,13 +1,13 @@
 <template lang="pug">
 main
   div
-    Dropdown(:options="categoryOptions")
+    Dropdown(:currentOption="currentOption")
       template(v-slot:default="{ onCloseDropdown }")
         nuxt-link.block.px-3.py-4.text-xl.capitalize.cursor-pointer(
           :key='option.id'
-          @click.native="onCloseDropdown(option)"
           class="hover:bg-white"
           v-for='option in categoryOptions'
+          @click.native="onCloseDropdown"
           :to="{ name: 'articles', query: { category: option.name }}"
         )
           input.hidden(type='radio' :id='option.name + option.id' name='category')
@@ -50,6 +50,7 @@ export default defineComponent({
   setup() {
     const currentPage: Ref<number> = ref(1)
     const categories: Ref<string[]> = ref([])
+    const currentOption: Ref<string | (string | null)[]> = ref('')
 
     const { context, storyApi } = useContext()
     const { total, articles, fetchArticles } = useFetchArticles()
@@ -57,6 +58,7 @@ export default defineComponent({
 
     const setArticles = async (category: string | (string | null)[]) => {
       const opts = !category || category === 'latest' ? { sort_by: 'position:asc' } : { with_tag: category }
+      currentOption.value = categories.value.includes(category as string) ? category : categories.value[0]
       await fetchArticles(opts)
     }
 
@@ -82,6 +84,7 @@ export default defineComponent({
       articles,
       categories,
       currentPage,
+      currentOption,
       currentCategory,
       categoryOptions
     }
