@@ -109,15 +109,15 @@ export default defineComponent({
     })
 
     return {
+      md,
       prev,
       next,
-      md,
       article,
       isLoading,
       publishedAt,
       articleBody,
-      articleContent,
-      smoothScroll
+      smoothScroll,
+      articleContent
     }
   }
 })

@@ -21,20 +21,26 @@ main
           div(style="padding: 0 16px;")
             h2.post-card__content {{ article.content.title }}
             p {{ article.content.excerpt }}
-  div.pagination
-    p page {{ currentPage }} of {{ total }}
+
+  .flex.items-center.py-3
+    nuxt-link.block(:to="newest" :disabled="currentPage <= 1") <-- Newest
+    p page {{ currentPage }} of {{ totalPages }}
+    nuxt-link.block(:to="oldest" :disabled="currentPage >= totalPages") Oldest -->
 </template>
 
 <script lang="ts">
 import { pipe, pluck, prepend } from 'ramda'
-import { watch, defineComponent, onMounted, ref, Ref, computed } from '@vue/composition-api'
+import { Dictionary } from 'vue-router/types/router'
+import { watch, defineComponent, onMounted, ref, Ref, computed, ComputedRef } from '@vue/composition-api'
 
 import useContext from '@/hooks/useContext'
+import { IDropdownOption } from '@/global-types'
 import Dropdown from '@/components/Dropdown.vue'
-import useFetchArticles from '@/hooks/useFetchArticles'
+import usePagination from '@/hooks/usePagination'
+import useFetchArticles, { MAX_POST_PER_PAGE } from '@/hooks/useFetchArticles'
 
 // -- until nuxt comes up with a reliable solution for dealing with asyncData
-const currentCategory: Ref<string | (string | null)[]> = ref('')
+const query: Ref<Dictionary<string | (string | null)[]>> = ref({})
 
 export default defineComponent({
   name: 'articles',
@@ -43,37 +49,52 @@ export default defineComponent({
 
   components: { Dropdown },
 
-  asyncData: ({ query }) => {
-    currentCategory.value = query?.category
+  asyncData: ({ query: data }) => {
+    query.value = data
   },
 
   setup() {
-    const currentPage: Ref<number> = ref(1)
     const categories: Ref<string[]> = ref([])
     const currentOption: Ref<string | (string | null)[]> = ref('')
 
     const { context, storyApi } = useContext()
     const { total, articles, fetchArticles } = useFetchArticles()
-    const categoryOptions = computed(() => categories.value.map((name: any, i: number) => ({ id: i, name })))
+    const { oldest, newest, currentPage, setPagination } = usePagination()
 
-    const setArticles = async (category: string | (string | null)[]) => {
+    const setArticles = async ({ category, page = '1' }: Dictionary<string | (string | null)[]>) => {
       const opts = !category || category === 'everything' ? { sort_by: 'position:asc' } : { with_tag: category }
       currentOption.value = categories.value.includes(category as string) ? category : categories.value[0]
+
       await fetchArticles(opts)
+      setPagination(category, Number(page), totalPages)
     }
 
+    const categoryOptions: ComputedRef<IDropdownOption[]> =
+      computed(() => categories.value.map((name: any, i: number) => ({ id: i, name })))
+    const totalPages: ComputedRef<number> =
+      computed(() => total.value === 0 ? 1 : Math.ceil(total.value / MAX_POST_PER_PAGE))
+
     watch(
-      () => currentCategory.value,
-      async (currentCategory: string | (string | null)[]) => await setArticles(currentCategory)
+      () => query.value,
+      async (query: Dictionary<string | (string | null)[]>) => {
+        const page = Number(query.page)
+
+        if (page > totalPages.value || page < 1) {
+          context.error({ statusCode: 404 })
+          return
+        }
+
+        await setArticles(query)
+      }
     )
 
     onMounted(async () => {
       try {
-        const { category } = context.route.query
+        const { query } = context.route
         const { data: { tags } } = await storyApi.get('cdn/tags/', { starts_with: 'articles/' })
 
         categories.value = pipe(pluck('name'), prepend('everything'))(tags)
-        await setArticles(category)
+        await setArticles(query)
       } catch (e) {
         console.warn(e)
       }
@@ -81,11 +102,12 @@ export default defineComponent({
 
     return {
       total,
+      oldest,
+      newest,
       articles,
-      categories,
+      totalPages,
       currentPage,
       currentOption,
-      currentCategory,
       categoryOptions
     }
   }
