@@ -26,7 +26,7 @@ main
 </template>
 
 <script lang="ts">
-import { pluck } from 'ramda'
+import { pipe, pluck, prepend } from 'ramda'
 import { watch, defineComponent, onMounted, ref, Ref, computed } from '@vue/composition-api'
 
 import useContext from '@/hooks/useContext'
@@ -57,7 +57,7 @@ export default defineComponent({
     const categoryOptions = computed(() => categories.value.map((name: any, i: number) => ({ id: i, name })))
 
     const setArticles = async (category: string | (string | null)[]) => {
-      const opts = !category || category === 'latest' ? { sort_by: 'position:asc' } : { with_tag: category }
+      const opts = !category || category === 'everything' ? { sort_by: 'position:asc' } : { with_tag: category }
       currentOption.value = categories.value.includes(category as string) ? category : categories.value[0]
       await fetchArticles(opts)
     }
@@ -72,7 +72,7 @@ export default defineComponent({
         const { category } = context.route.query
         const { data: { tags } } = await storyApi.get('cdn/tags/', { starts_with: 'articles/' })
 
-        categories.value = pluck('name')(tags)
+        categories.value = pipe(pluck('name'), prepend('everything'))(tags)
         await setArticles(category)
       } catch (e) {
         console.warn(e)

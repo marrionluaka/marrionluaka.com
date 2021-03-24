@@ -44,8 +44,8 @@ export default defineComponent({
           reduce((acc: any, story: IStory): { [key:string]: IStory[] } => {
             const setCategory = (key: string) => acc[key] = acc[key] ? [...acc[key], story] : [story]
 
-            if (!acc['latest'] || acc['latest'].length < 8)
-              setCategory('latest')
+            if (!acc['everything'] || acc['everything'].length < 8)
+              setCategory('everything')
 
             if (story.tag_list.length)
               story.tag_list.forEach(setCategory)
