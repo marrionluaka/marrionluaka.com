@@ -95,9 +95,6 @@ export default defineComponent({
       background #ccc
       border-radius 0 8px 8px 0
 
-  &__option:hover
-    background #ffffff
-
   &__selected
     @apply py-3 pr-4 pl-3 bg-white capitalize
     color #ababab
