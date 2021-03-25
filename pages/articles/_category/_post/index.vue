@@ -61,6 +61,7 @@ import { format } from 'date-fns'
 import { defineComponent, onMounted, ref, Ref } from '@vue/composition-api'
 
 import { IArticle } from '@/global-types'
+import { DEFAULT_CATEGORY, DATE_FORMAT } from '@/global-const'
 
 import useContext from '@/hooks/useContext'
 import useMarkdown from '@/hooks/useMarkdown'
@@ -75,7 +76,6 @@ export default defineComponent({
   components: { ProgressBar },
 
   setup() {
-    const DATE_FORMAT = "MMM do yyyy"
     const publishedAt: Ref<string> = ref('')
     const isLoading: Ref<boolean> = ref(true)
     const article: Ref<IArticle | null> = ref(null)
@@ -85,22 +85,28 @@ export default defineComponent({
     useImageZoom(articleBody)
     useAnchorTitle(articleBody)
     const { md } = useMarkdown()
-    const { context, repo } = useContext()
+    const { context, storyApi } = useContext()
     const { smoothScroll } = useSmoothScroll(articleContent)
     const { prev, next, setPrevNextLinks } = usePostLinks(context.app.$storyapi)
 
     onMounted(async () => {
       try {
-        const slug = path(['route', 'params', 'slug'], context)
+        const slug = path(['route', 'params', 'post'], context)
+        const findCategory = (x: string): boolean => x === context.route.params.category
 
         if (!slug) throw new Error('Article not found.')
 
-        const { data } = await repo.getResourceById({ version: 'published' }, `articles/${slug}`)
+        const { data: { story } } = await storyApi.get(`cdn/stories/articles/${slug}`, { version: 'published' })
 
-        await setPrevNextLinks(data.story.uuid)
+        if (!story.tag_list.find(findCategory) && context.route.params.category !== DEFAULT_CATEGORY) {
+          context.error({ statusCode: 404 })
+          return
+        }
 
-        article.value = data.story.content
-        publishedAt.value = format(new Date(data.story.published_at), DATE_FORMAT)
+        await setPrevNextLinks(story.uuid)
+
+        article.value = story.content
+        publishedAt.value = format(new Date(story.published_at), DATE_FORMAT)
       } catch (e) {
         console.warn(e)
       } finally {

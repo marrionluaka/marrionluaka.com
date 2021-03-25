@@ -8,7 +8,7 @@ main
           h2 About Love
           p I don't want to be without you gurl!
     h2.capitalize.text-2xl Latest posts in {{ article[0] }}
-    nuxt-link(:to="`/articles?category=${article[0]}`") view all -->
+    nuxt-link(:to="`/articles/${article[0]}`") view all -->
     div(v-for="a in article[1]")
       nuxt-link.block.shadow-lg.rounded.overflow-hidden.max-w-md(
         :to="a.full_slug"
@@ -30,6 +30,7 @@ import { defineComponent, onMounted, ref, Ref } from '@vue/composition-api'
 
 import { IStory } from '@/global-types'
 import useContext from '@/hooks/useContext'
+import { DEFAULT_CATEGORY } from '@/global-const'
 
 export default defineComponent({
   setup() {
@@ -44,8 +45,8 @@ export default defineComponent({
           reduce((acc: any, story: IStory): { [key:string]: IStory[] } => {
             const setCategory = (key: string) => acc[key] = acc[key] ? [...acc[key], story] : [story]
 
-            if (!acc['everything'] || acc['everything'].length < 8)
-              setCategory('everything')
+            if (!acc[DEFAULT_CATEGORY] || acc[DEFAULT_CATEGORY].length < 8)
+              setCategory(DEFAULT_CATEGORY)
 
             if (story.tag_list.length)
               story.tag_list.forEach(setCategory)
