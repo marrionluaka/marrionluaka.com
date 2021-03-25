@@ -9,7 +9,7 @@ main
           v-for='option in categoryOptions'
           @click.stop="selectCategory(onCloseDropdown, option.name)"
         )
-          span.cursor-pointer(:for='option.name + option.id') {{ option.name }}
+          span.cursor-pointer {{ option.name }}
 
   section.row
     div(v-for="article in articles" :key="article.id")
