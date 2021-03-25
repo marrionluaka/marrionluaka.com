@@ -20,56 +20,75 @@ main
             h2.post-card__content {{ article.content.title }}
             p {{ article.content.excerpt }}
 
-  .flex.items-center.py-3
-    nuxt-link.block(:to="newest" :disabled="currentPage <= 1") <-- Newest
-    p page {{ currentPage }} of {{ totalPages }}
-    nuxt-link.block(:to="oldest" :disabled="currentPage >= totalPages") Oldest -->
+  Pagination(v-model="currentPage" :per-page="postPerPage" :records="total" @paginate="paginate")
 </template>
 
 <script lang="ts">
+import Pagination from 'vue-pagination-2'
 import { pipe, pluck, prepend } from 'ramda'
 import { Dictionary } from 'vue-router/types/router'
-import { defineComponent, onMounted, ref, Ref, computed, ComputedRef } from '@vue/composition-api'
+import { defineComponent, watch, onMounted, ref, Ref, computed, ComputedRef } from '@vue/composition-api'
 
 import useContext from '@/hooks/useContext'
+import Dropdown from '@/components/Dropdown.vue'
 import { IDropdownOption } from '@/global-types'
 import { DEFAULT_CATEGORY } from '@/global-const'
-import Dropdown from '@/components/Dropdown.vue'
-import usePagination from '@/hooks/usePagination'
 import useFetchArticles, { MAX_POST_PER_PAGE } from '@/hooks/useFetchArticles'
 
+const queryString: Ref<string | (string | null)[]> = ref('')
 export default defineComponent({
   name: 'articles',
 
-  components: { Dropdown },
+  watchQuery: true,
+
+  components: { Dropdown, Pagination },
+
+  asyncData: ({ query }) => {
+    queryString.value = query.page
+  },
 
   setup() {
+    const currentPage: Ref<number> = ref(1)
     const categories: Ref<string[]> = ref([])
     const currentOption: Ref<string | (string | null)[]> = ref('')
 
     const { context, storyApi } = useContext()
     const { total, articles, fetchArticles } = useFetchArticles()
-    const { oldest, newest, currentPage, setPagination } = usePagination()
+
+    const selectCategory = async (onCloseDropdown: any, category: string) => {
+      onCloseDropdown()
+      await navTo('/articles/' + category, category, 1)
+    }
+
+    const paginate = async (page: number) =>
+      await navTo((page === 1 ? '' : `?page=${page}`), currentOption.value, page)
+
+    const navTo = async (url: string, category: string | (string | null)[], page: number) => {
+      history.pushState(null, '', url)
+      await setArticles({ category }, { page })
+    }
 
     const setArticles = async ({ category }: any, { page = '1' }: Dictionary<string | number | (string | null)[]>) => {
-      const opts = !category || category === DEFAULT_CATEGORY ? { sort_by: 'position:asc' } : { with_tag: category }
+      currentPage.value = Number(page)
       currentOption.value = categories.value.includes(category as string) ? category : categories.value[0]
 
-      await fetchArticles(opts)
-      setPagination(category, Number(page), totalPages)
+      await fetchArticlesProxy(category, Number(page) || 1)
     }
+
+    const fetchArticlesProxy = async (category: string | (string | null)[], page: number): Promise<void> => {
+      const params = !category || category === DEFAULT_CATEGORY ? { sort_by: 'position:asc' } : { with_tag: category }
+      await fetchArticles({ ...params, page })
+    }
+
+    watch(
+      () => queryString.value,
+      async (page: any): Promise<void> => await fetchArticlesProxy(currentOption.value, Number(page) || 1)
+    )
+
+    const postPerPage: ComputedRef<number> = computed(() => MAX_POST_PER_PAGE)
 
     const categoryOptions: ComputedRef<IDropdownOption[]> =
       computed(() => categories.value.map((name: any, i: number) => ({ id: i, name })))
-    const totalPages: ComputedRef<number> =
-      computed(() => total.value === 0 ? 1 : Math.ceil(total.value / MAX_POST_PER_PAGE))
-
-    const selectCategory = async (onCloseDropdown: any, value: any) => {
-      onCloseDropdown()
-
-      history.pushState(null, value, '/articles/' + value + '/')
-      await setArticles({ category: value }, { page: 1 })
-    }
 
     onMounted(async () => {
       try {
@@ -85,10 +104,9 @@ export default defineComponent({
 
     return {
       total,
-      oldest,
-      newest,
+      paginate,
       articles,
-      totalPages,
+      postPerPage,
       currentPage,
       currentOption,
       selectCategory,
