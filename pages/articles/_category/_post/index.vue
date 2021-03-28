@@ -3,6 +3,7 @@
   ProgressBar
   div(v-if="isLoading")
     | loading...
+
   div(v-else-if="article")
     section.article-header
       .article-header__title
@@ -35,22 +36,11 @@
     section.article-intro
       p {{ article.intro_paragraph }}
 
-    section.article-series(v-if="article.series")
-      div(v-html="md.render(article.series)")
+    section.article-series(v-if="article.series" v-html="md.render(article.series)")
+    TableOfContent(v-if="article.toc" :content="md.render(article.toc)")
+    PostContent(:content="md.render(article.body)")
+    RelatedPosts(:uuid="uuid")
 
-    section.article-table-of-content(v-if="article.toc")
-      h3 Table of Content
-      hr.my-4
-      .article-content(ref="articleContent" v-html="md.render(article.toc)")
-
-    section.article-body(v-html="md.render(article.body)" ref="articleBody")
-
-    section.article-footer(v-if='prev || next')
-      .angles.flex.justify-between
-        nuxt-link(v-if="!!prev" :to='prev')
-          span.angle-left < Previous
-        nuxt-link(v-if="!!next" :to='next')
-          span.angle-right Next >
   div(v-else)
     | Whoops! No article found.
 </template>
@@ -65,29 +55,28 @@ import { DEFAULT_CATEGORY, DATE_FORMAT } from '@/global-const'
 
 import useContext from '@/hooks/useContext'
 import useMarkdown from '@/hooks/useMarkdown'
-import usePostLinks from '@/hooks/usePostLinks'
-import useImageZoom from '@/hooks/useImageZoom'
-import useAnchorTitle from '@/hooks/useAnchorTitle'
-import useSmoothScroll from '@/hooks/useSmoothScroll'
 
 import ProgressBar from '@/components/ProgressBar.vue'
+import PostContent from '@/components/PostContent.vue'
+import RelatedPosts from '@/components/RelatedPosts.vue'
+import TableOfContent from '@/components/TableOfContent.vue'
 
 export default defineComponent({
-  components: { ProgressBar },
+  components: {
+    ProgressBar,
+    PostContent,
+    TableOfContent,
+    RelatedPosts
+  },
 
   setup() {
+    const uuid: Ref<string> = ref('')
     const publishedAt: Ref<string> = ref('')
     const isLoading: Ref<boolean> = ref(true)
     const article: Ref<IArticle | null> = ref(null)
-    const articleBody: Ref<HTMLElement | null> = ref(null)
-    const articleContent: Ref<HTMLElement | null> = ref(null)
 
-    useImageZoom(articleBody)
-    useAnchorTitle(articleBody)
     const { md } = useMarkdown()
     const { context, storyApi } = useContext()
-    const { smoothScroll } = useSmoothScroll(articleContent)
-    const { prev, next, setPrevNextLinks } = usePostLinks(context.app.$storyapi)
 
     onMounted(async () => {
       try {
@@ -103,8 +92,7 @@ export default defineComponent({
           return
         }
 
-        await setPrevNextLinks(story.uuid)
-
+        uuid.value = story.uuid
         article.value = story.content
         publishedAt.value = format(new Date(story.published_at), DATE_FORMAT)
       } catch (e) {
@@ -116,14 +104,10 @@ export default defineComponent({
 
     return {
       md,
-      prev,
-      next,
+      uuid,
       article,
       isLoading,
-      publishedAt,
-      articleBody,
-      smoothScroll,
-      articleContent
+      publishedAt
     }
   }
 })
@@ -191,112 +175,4 @@ export default defineComponent({
 
       a
         text-decoration underline
-
-  &-table-of-content
-    margin-top 56px
-    margin-bottom 56px
-
-    >>> h3
-      @apply text-xl
-      +breakpoint('md')
-        @apply text-2xl
-
-    >>> ul, ol
-      @apply pl-8 space-y-1
-
-    >>> li
-      list-style disc
-      color #b2b2b2
-      text-decoration underline
-
-  &-body
-    >>> iframe
-      @apply w-full border-0 rounded-md
-
-    >>> video
-      @apply max-w-full
-
-    >>> a
-      @apply underline
-
-    >>> p
-      @apply text-base
-      +breakpoint('md')
-        @apply text-lg
-      margin 24px 0
-      color #3b454e
-
-    >>> ul
-      @apply list-disc pl-10 space-y-1
-
-    >>> ol
-      list-style-type decimal
-
-    >>> li
-      color #3b454e
-      list-style-type inherit
-
-    >>> img
-        margin 16px 0 8px
-        border-radius 4px
-        cursor zoom-in
-        transition transform 300ms cubic-bezier(0.2, 0, 0.2, 1)
-        position relative
-
-        &.zoomed
-          cursor zoom-out
-          z-index 8
-          // transform scale(0.535714) translate(-348.133px, 179.725px)
-          +breakpoint('md')
-            transform scale(1.55714) translate(-6.42202px, 4.27666px)
-
-    >>> h2
-      @apply flex items-center font-medium text-2xl mt-8 pt-8 mb-3
-      // font-family $san-fran-semi-bold
-      +breakpoint('md')
-        @apply text-3xl
-      a
-        @apply inline-block pr-1
-
-    >>> h2 + p
-      margin-top 8px
-    
-    >>> h3
-      @apply mt-6 pt-6 text-xl
-      +breakpoint('md')
-        @apply text-2xl
-
-    >>> pre
-      margin-bottom 24px
-      code.hljs
-        padding: 16px 30px 20px
-
-    >>> pre, >>> code
-      border-radius 5px
-    
-    >>> :not(pre) > code
-      font-size 14px
-      background #f0f0f0
-      color #ef3b7d
-      border-radius 2px
-      font-family Source Code Pro,Consolas,monospace
-      display inline-block
-      padding 1px 6px
-
-    >>> blockquote
-      color #828282
-      border-left 4px solid #e8e8e8
-      padding-left 15px
-      font-size 18px
-      letter-spacing -1px
-      font-style italic
-
-  &-footer
-    overflow hidden
-    .angles
-      margin 56px 0
-      .angle-left, .angle-right
-        padding 7px 20px
-        border 1px solid
-        border-radius 4px
 </style>

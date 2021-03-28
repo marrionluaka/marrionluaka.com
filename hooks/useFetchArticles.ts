@@ -5,7 +5,7 @@ import useContext from '@/hooks/useContext'
 
 export const MAX_POST_PER_PAGE = 3
 export default function useFetchArticles() {
-  const { context, storyApi } = useContext()
+  const { storyApi } = useContext()
 
   const total: Ref<number> = ref(0)
   const articles: Ref<IStory[]> = ref([])
