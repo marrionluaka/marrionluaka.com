@@ -31,10 +31,9 @@ export default {
     const overlay: HTMLElement = document.createElement('div')
     const layout: any = document.getElementById('__layout')
 
-    el.onScroll = _onScroll.bind(null, layout)
-
     if (!imgs || !layout) return
-
+    
+    el.onScroll = _onScroll.bind(null, layout)
     document.addEventListener('scroll', el.onScroll)
     overlay.addEventListener('click', _removeImageOverlay(overlay, layout))
 
