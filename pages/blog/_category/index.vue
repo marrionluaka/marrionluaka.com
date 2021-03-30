@@ -13,7 +13,7 @@ main
 
   section.row
     div(v-for="article in articles" :key="article.id")
-      nuxt-link.post-card(:to="`/article/${article.slug}`")
+      nuxt-link.post-card(:to="`/${article.full_slug}`")
         figure
           img(:src='article.content.featured_image.filename')
           div(style="padding: 0 16px;")
@@ -57,7 +57,7 @@ export default defineComponent({
 
     const selectCategory = async (onCloseDropdown: any, category: string) => {
       onCloseDropdown()
-      await navTo('/article/' + category, category, 1)
+      await navTo('/blog/' + category, category, 1)
     }
 
     const paginate = async (page: number) =>
