@@ -1,17 +1,29 @@
 @font-face {
   font-family: "San-Francisco";
   font-weight: 100;
-  src: url("https://applesocial.s3.amazonaws.com/assets/styles/fonts/sanfrancisco/sanfranciscodisplay-light-webfont.woff");
+  src: url('../webfonts/sanfranciscodisplay-light-webfont.eot');
+  src: url('../webfonts/sanfranciscodisplay-light-webfont.eot') format('embedded-opentype'),
+    url('../webfonts/sanfranciscodisplay-light-webfont.woff2') format('woff2'),
+    url('../webfonts/sanfranciscodisplay-light-webfont.woff') format('woff'),
+    url('../webfonts/sanfranciscodisplay-light-webfont.ttf') format('truetype');
 }
 
 @font-face {
   font-family: "San-Francisco";
   font-weight: 400;
-  src: url("https://applesocial.s3.amazonaws.com/assets/styles/fonts/sanfrancisco/sanfranciscodisplay-regular-webfont.woff");
+  src: url('../webfonts/sanfranciscodisplay-regular-webfont.eot');
+  src: url('../webfonts/sanfranciscodisplay-regular-webfont.eot') format('embedded-opentype'),
+    url('../webfonts/sanfranciscodisplay-regular-webfont.woff2') format('woff2'),
+    url('../webfonts/sanfranciscodisplay-regular-webfont.woff') format('woff'),
+    url('../webfonts/sanfranciscodisplay-regular-webfont.ttf') format('truetype');
 }
 
 @font-face {
   font-family: "San-Francisco";
   font-weight: 500;
-  src: url("https://applesocial.s3.amazonaws.com/assets/styles/fonts/sanfrancisco/sanfranciscodisplay-semibold-webfont.woff");
+  src: url('../webfonts/sanfranciscodisplay-semibold-webfont.eot');
+  src: url('../webfonts/sanfranciscodisplay-semibold-webfont.eot') format('embedded-opentype'),
+    url('../webfonts/sanfranciscodisplay-semibold-webfont.woff2') format('woff2'),
+    url('../webfonts/sanfranciscodisplay-semibold-webfont.woff') format('woff'),
+    url('../webfonts/sanfranciscodisplay-semibold-webfont.ttf') format('truetype');
 }
