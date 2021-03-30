@@ -13,7 +13,7 @@ main
 
   section.row
     div(v-for="article in articles" :key="article.id")
-      nuxt-link.post-card(:to="`/articles/${currentOption}/${article.slug}`")
+      nuxt-link.post-card(:to="`/article/${article.slug}`")
         figure
           img(:src='article.content.featured_image.filename')
           div(style="padding: 0 16px;")
@@ -57,7 +57,7 @@ export default defineComponent({
 
     const selectCategory = async (onCloseDropdown: any, category: string) => {
       onCloseDropdown()
-      await navTo('/articles/' + category, category, 1)
+      await navTo('/article/' + category, category, 1)
     }
 
     const paginate = async (page: number) =>
@@ -93,7 +93,7 @@ export default defineComponent({
     onMounted(async () => {
       try {
         const { params, query } = context.route
-        const { data: { tags } } = await storyApi.get('cdn/tags/', { starts_with: 'articles/' })
+        const { data: { tags } } = await storyApi.get('cdn/tags/', { starts_with: 'article/' })
 
         categories.value = pipe(pluck('name'), prepend(DEFAULT_CATEGORY))(tags)
         await setArticles(params, query)

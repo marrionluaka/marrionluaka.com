@@ -22,7 +22,7 @@ export default function usePostLinks(storyApi: { get: (str: string, opts: any) =
   const prev: Ref<string> = ref('')
 
   const setPrevNextLinks = async (uuid: string): Promise<void> => {
-    const { data: { links } } = await storyApi.get('cdn/links/', { starts_with: 'articles/' })
+    const { data: { links } } = await storyApi.get('cdn/links/', { starts_with: 'article/' })
 
     const matchedRoute: ILink = links[uuid]
     const pos: number = matchedRoute.position

@@ -13,7 +13,7 @@ export default function useFetchArticles() {
   const fetchArticles = async (opts: any) => {
     try {
       const res = await storyApi.get('cdn/stories/', {
-        starts_with: 'articles/',
+        starts_with: 'article/',
         per_page: MAX_POST_PER_PAGE,
         ...opts
       })

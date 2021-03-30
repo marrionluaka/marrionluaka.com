@@ -8,7 +8,7 @@ main
           h2 About Love
           p I don't want to be without you gurl!
     h2.capitalize.text-2xl Latest posts in {{ article[0] }}
-    nuxt-link(:to="`/articles/${article[0]}`") view all -->
+    nuxt-link(:to="`/blog/${article[0]}`") view all -->
     div(v-for="a in article[1]")
       nuxt-link.block.shadow-lg.rounded.overflow-hidden.max-w-md(
         :to="a.full_slug"
@@ -39,7 +39,7 @@ export default defineComponent({
 
     onMounted(async () => {
       try {
-        const { data: { stories } } = await repo.getResources({ starts_with: 'articles/', sort_by: 'position:asc' })
+        const { data: { stories } } = await repo.getResources({ starts_with: 'article/', sort_by: 'position:asc' })
 
         articles.value = pipe(
           reduce((acc: any, story: IStory): { [key:string]: IStory[] } => {

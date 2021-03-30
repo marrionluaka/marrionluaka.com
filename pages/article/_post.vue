@@ -81,22 +81,17 @@ export default defineComponent({
     onMounted(async () => {
       try {
         const slug = path(['route', 'params', 'post'], context)
-        const findCategory = (x: string): boolean => x === context.route.params.category
 
         if (!slug) throw new Error('Article not found.')
 
-        const { data: { story } } = await storyApi.get(`cdn/stories/articles/${slug}`, { version: 'published' })
-
-        if (!story.tag_list.find(findCategory) && context.route.params.category !== DEFAULT_CATEGORY) {
-          context.error({ statusCode: 404 })
-          return
-        }
+        const { data: { story } } = await storyApi.get(`cdn/stories/article/${slug}`, { version: 'published' })
 
         uuid.value = story.uuid
         article.value = story.content
         publishedAt.value = format(new Date(story.published_at), DATE_FORMAT)
       } catch (e) {
         console.warn(e)
+        context.error({ statusCode: 404 })
       } finally {
         isLoading.value = false
       }

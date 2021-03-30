@@ -1,4 +1,4 @@
 export default function ({ redirect }: any) {
   // automatic redirect
-  return redirect('/articles/all')
+  return redirect('/blog/all')
 }
