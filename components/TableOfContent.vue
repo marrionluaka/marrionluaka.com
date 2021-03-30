@@ -1,6 +1,6 @@
 <template lang="pug">
 .table-of-content
-  h3 Table of Content
+  h2.mt-0 Table of Content
   hr.my-4
   div(v-html="content" v-smooth-scroll)
 </template>
@@ -27,16 +27,13 @@ export default defineComponent({
   margin-top 56px
   margin-bottom 56px
 
-  >>> h3
-    @apply text-xl
-    +breakpoint('md')
-      @apply text-2xl
+  >>> h2
+    @extends .post-header
 
   >>> ul, ol
     @apply pl-8 space-y-1
 
   >>> li
     list-style disc
-    color #b2b2b2
     text-decoration underline
 </style>

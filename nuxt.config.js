@@ -27,8 +27,9 @@ export default {
   //Resources loader
   styleResources: {
     stylus: [
-     '~assets/styl/_variables.styl',
-     '~assets/styl/_mixins.styl'
+      '~assets/styl/_variables.styl',
+      '~assets/styl/_mixins.styl',
+      '~assets/styl/_typography.styl'
     ]
   },
 

@@ -7,7 +7,7 @@
   div(v-else-if="article")
     section.article-header
       .article-header__title
-        h1.text-2xl(class="md:text-4xl") {{ article.title }}
+        h1(class="md:text-4xl") {{ article.title }}
         span.ml-underline
 
       .article-header__meta.flex.justify-center.items-center
@@ -130,11 +130,7 @@ export default defineComponent({
 
     &__title
       h1
-        line-height 32.4px
-        font-size 1.6875rem
-        +breakpoint('md')
-          line-height 60px
-          font-size 2.5rem
+        @extends .post-title
 
       span.ml-underline
         width 70px

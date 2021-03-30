@@ -26,17 +26,20 @@ export default defineComponent({
     @apply w-full border-0 rounded-md
 
   >>> video
-    @apply max-w-full
+    max-width 100%
 
   >>> a
-    @apply underline
+    text-decoration underline
 
   >>> p
-    @apply text-base
+    font-size 17px
+    line-height 1.47059
+    letter-spacing -.022em
     +breakpoint('md')
-      @apply text-lg
+      font-size 19px
+      line-height 1.4211
+      letter-spacing .012em
     margin 24px 0
-    color #3b454e
 
   >>> ul
     @apply list-disc pl-10 space-y-1
@@ -45,7 +48,6 @@ export default defineComponent({
     list-style-type decimal
 
   >>> li
-    color #3b454e
     list-style-type inherit
 
   >>> img
@@ -63,10 +65,9 @@ export default defineComponent({
           transform scale(1.55714) translate(-6.42202px, 4.27666px)
 
   >>> h2
-    @apply flex items-center font-medium text-2xl mt-8 pt-8 mb-3
-    // font-family $san-fran-semi-bold
-    +breakpoint('md')
-      @apply text-3xl
+    @extends .post-header
+    margin-top 2rem
+    padding-top 2rem
     a
       @apply inline-block pr-1
 
