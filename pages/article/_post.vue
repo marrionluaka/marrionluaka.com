@@ -15,7 +15,7 @@
           .transform.scale-75
             svg.w-6.h-6(fill='none' stroke='currentColor' viewbox='0 0 24 24' xmlns='http://www.w3.org/2000/svg')
               path(stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z')
-          p.text-sm(class="md:text-lg") {{ publishedAt }}
+          p.text-sm(class="md:text-lg") {{ formattedDate }}
         span.px-1(class="md:px-4") &#xb7;
 
         .flex.items-center
@@ -47,14 +47,13 @@
 
 <script lang="ts">
 import { path } from 'ramda'
-import { format } from 'date-fns'
 import { defineComponent, onMounted, ref, Ref } from '@vue/composition-api'
 
 import { IArticle } from '@/global-types'
-import { DEFAULT_CATEGORY, DATE_FORMAT } from '@/global-const'
 
 import useContext from '@/hooks/useContext'
 import useMarkdown from '@/hooks/useMarkdown'
+import useDateFormatter from '@/hooks/useDateFormatter'
 
 import ProgressBar from '@/components/ProgressBar.vue'
 import PostContent from '@/components/PostContent.vue'
@@ -71,12 +70,12 @@ export default defineComponent({
 
   setup() {
     const uuid: Ref<string> = ref('')
-    const publishedAt: Ref<string> = ref('')
     const isLoading: Ref<boolean> = ref(true)
     const article: Ref<IArticle | null> = ref(null)
 
     const { md } = useMarkdown()
     const { context, storyApi } = useContext()
+    const { formattedDate, formatDate } = useDateFormatter()
 
     onMounted(async () => {
       try {
@@ -88,7 +87,7 @@ export default defineComponent({
 
         uuid.value = story.uuid
         article.value = story.content
-        publishedAt.value = format(new Date(story.published_at), DATE_FORMAT)
+        formatDate(story.published_at)
       } catch (e) {
         console.warn(e)
         context.error({ statusCode: 404 })
@@ -102,7 +101,7 @@ export default defineComponent({
       uuid,
       article,
       isLoading,
-      publishedAt
+      formattedDate
     }
   }
 })
