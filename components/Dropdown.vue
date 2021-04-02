@@ -74,10 +74,10 @@ export default defineComponent({
 
     &::before
       @apply left-0 right-0 absolute
-      bottom -2px
+      bottom 3px
       height 1px
       content ""
-      background-color #efecec
+      background-color #1d1d1f
 
   &__options
     @apply absolute z-10 max-h-0 w-full opacity-0 transition-all rounded-xl overflow-hidden order-1
@@ -96,6 +96,6 @@ export default defineComponent({
       border-radius 0 8px 8px 0
 
   &__selected
-    @apply py-3 pr-4 pl-3 bg-white capitalize
-    color #ababab
+    @apply py-3 pr-4 pl-3 bg-transparent capitalize
+    // color #ababab
 </style>

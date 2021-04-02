@@ -1,5 +1,5 @@
 <template lang="pug">
-main
+main.pt-20.bg-primary.pb-20
   div
     Dropdown(:currentOption="currentOption")
       template(v-slot:default="{ onCloseDropdown }")
@@ -11,16 +11,30 @@ main
         )
           span.cursor-pointer {{ option.name }}
 
-  section.row
-    div(v-for="article in articles" :key="article.id")
-      nuxt-link.post-card(:to="`/${article.full_slug}`")
-        figure
-          img(:src='article.content.featured_image.filename')
-          div(style="padding: 0 16px;")
-            h2.post-card__content {{ article.content.title }}
-            p {{ article.content.excerpt }}
+  section
+    .py-12
+      .content-container.mx-auto.px-4(class='sm:px-6 lg:px-8')
+        dl.space-y-10(class='sm:space-y-0 sm:grid sm:grid-cols-2 lg:grid-cols-3 sm:gap-6')
+          div(v-for="article in articles" :key="article.id")
+            dt.h-full
+              nuxt-link.h-full.flex.flex-col.rounded-lg.overflow-hidden(:to="`/${article.full_slug}`")
+                .flex-shrink-0
+                  img.h-48.w-full.object-cover(:src="article.content.featured_image.filename" alt='')
+                .flex-1.bg-white.p-6.flex.flex-col.justify-between
+                  .flex-1
+                    p.text-sm.font-medium.text-cyan-600.uppercase Latest
+                    article.block.mt-2(href='#')
+                      p.text-xl.font-semibold.text-gray-900 {{ article.content.title }}
+                  .mt-6.flex.items-center
+                    //- time(datetime='2020-03-10') {{ format(new Date(article.published_at), "MMM d, yyyy") }}
 
-  Pagination(v-model="currentPage" :per-page="postPerPage" :records="total" @paginate="paginate")
+  Pagination(
+    :options="opts"
+    :records="total"
+    @paginate="paginate"
+    v-model="currentPage"
+    :per-page="postPerPage"
+  )
 </template>
 
 <script lang="ts">
@@ -33,6 +47,7 @@ import useContext from '@/hooks/useContext'
 import Dropdown from '@/components/Dropdown.vue'
 import { IDropdownOption } from '@/global-types'
 import { DEFAULT_CATEGORY } from '@/global-const'
+import CustomPagination from '@/components/CustomPagination.vue'
 import useFetchArticles, { MAX_POST_PER_PAGE } from '@/hooks/useFetchArticles'
 
 const queryString: Ref<string | (string | null)[]> = ref('')
@@ -60,8 +75,10 @@ export default defineComponent({
       await navTo('/blog/' + category, category, 1)
     }
 
-    const paginate = async (page: number) =>
-      await navTo((page === 1 ? '' : `?page=${page}`), currentOption.value, page)
+    const paginate = async (page: number) => {
+      console.log('called', page)
+      await navTo((`?page=${page}`), currentOption.value, page)
+    }
 
     const navTo = async (url: string, category: string | (string | null)[], page: number) => {
       history.pushState(null, '', url)
@@ -110,7 +127,8 @@ export default defineComponent({
       currentPage,
       currentOption,
       selectCategory,
-      categoryOptions
+      categoryOptions,
+      opts: { template: CustomPagination }
     }
   }
 })
