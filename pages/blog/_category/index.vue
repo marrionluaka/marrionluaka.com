@@ -13,8 +13,8 @@ main.pt-20.bg-primary.pb-20
 
   section
     .py-12
-      .content-container.mx-auto.px-4(class='sm:px-6 lg:px-8')
-        dl.space-y-10(class='sm:space-y-0 sm:grid sm:grid-cols-2 lg:grid-cols-3 sm:gap-6')
+      .content-container.mx-auto.px-4(class='md:px-0')
+        dl.space-y-10(class='sm:space-y-0 sm:grid sm:grid-cols-2 lg:grid-cols-3 sm:gap-8')
           div(v-for="article in articles" :key="article.id")
             dt.h-full
               nuxt-link.h-full.flex.flex-col.rounded-lg.overflow-hidden(:to="`/${article.full_slug}`")
@@ -26,7 +26,7 @@ main.pt-20.bg-primary.pb-20
                     article.block.mt-2(href='#')
                       p.text-xl.font-semibold.text-gray-900 {{ article.content.title }}
                   .mt-6.flex.items-center
-                    //- time(datetime='2020-03-10') {{ format(new Date(article.published_at), "MMM d, yyyy") }}
+                    time(datetime='2020-03-10') {{ format(new Date(article.published_at), "MMM d, yyyy") }}
 
   Pagination(
     :options="opts"
@@ -38,6 +38,7 @@ main.pt-20.bg-primary.pb-20
 </template>
 
 <script lang="ts">
+import { format } from 'date-fns'
 import Pagination from 'vue-pagination-2'
 import { pipe, pluck, prepend } from 'ramda'
 import { Dictionary } from 'vue-router/types/router'
@@ -121,6 +122,7 @@ export default defineComponent({
 
     return {
       total,
+      format,
       paginate,
       articles,
       postPerPage,
