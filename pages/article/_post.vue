@@ -1,5 +1,5 @@
 <template lang="pug">
-.article.container.my-12.mx-auto.px-4(class="lg:px-52 xl:px-64")
+.article.container.my-12.mx-auto.px-4.pb-20(class="lg:px-52 xl:px-64")
   ProgressBar
   div(v-if="isLoading")
     | loading...

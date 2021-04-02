@@ -3,7 +3,7 @@ import { ref, Ref } from '@vue/composition-api'
 import { IStory } from '@/global-types'
 import useContext from '@/hooks/useContext'
 
-export const MAX_POST_PER_PAGE = 3
+export const MAX_POST_PER_PAGE = 12
 export default function useFetchArticles() {
   const { storyApi } = useContext()
 

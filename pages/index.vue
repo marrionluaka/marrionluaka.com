@@ -1,32 +1,116 @@
 <template lang="pug">
-main
-  div(v-for="(article, i) in articles")
-    div(v-if="i === 1")
-      .flex.items-center.py-6
-        div IMG
-        div
-          h2 About Love
-          p I don't want to be without you gurl!
-    h2.capitalize.text-2xl Latest posts in {{ article[0] }}
-    nuxt-link(:to="`/blog/${article[0]}`") view all -->
-    div(v-for="a in article[1]")
-      nuxt-link.block.shadow-lg.rounded.overflow-hidden.max-w-md(
-        :to="a.full_slug"
-        :key="a._uid"
-        class='sm:flex'
-      )
-        .bg-cover.bg-center.h-48.w-auto(
-          style="background-image:url('https://marrionluaka.com/wp-content/uploads/2020/07/template-3-1-400x209.png')"
-          class='sm:h-auto sm:w-64'
-        )
-        .p-4
-          h2.font-black.mb-3 {{ a.content.title }}
-          p.text-sm.text-grey-dark.mb-4 {{ a.content.excerpt }}
+main.pb-20
+  header.flex.items-center.bg-white.h-screen
+    .max-w-xl.mx-auto.px-4(class='sm:px-6 lg:max-w-5xl lg:px-8')
+      div(class='lg:grid lg:grid-cols-2 lg:grid-flow-col-dense')
+        .flex.items-center.max-w-xl.mx-auto.px-4(class='sm:px-6 lg:py-16 lg:max-w-none lg:mx-0 lg:px-0')
+          div
+            .mt-6
+              h1.text-3xl.font-extrabold.tracking-tight.text-gray-900
+                | Hi, I’m Marrion Luaka.
+              p.mt-4.text-base(class='md:text-lg')
+                | I like making things. I turn ideas into reality. 
+                | On this website, I share my thoughts on programming and various other topics.
+
+        .mt-16(class="md:mt-12")
+          img.w-full(class='lg:h-full' src='~/assets/images/home-banner.png' alt='Inbox user interface')
+
+  //- latest article
+  section.mt-32.mb-20
+    .content-container.mx-auto.px-4.featured(v-if="ss" class='sm:px-6 lg:px-8')
+      nuxt-link.grid-cols-3.block.rounded-lg.overflow-hidden(class="sm:grid" :to="ss.full_slug")
+        .col-span-2
+          img(:src="ss.content.featured_image.filename" alt='')
+        .flex-1.bg-white.p-6.flex.flex-col.justify-between
+          .flex-1
+            p.featured__category Latest
+            .mt-2(href='#')
+              p.featured__title {{ ss.content.title }}
+          .mt-6.flex.items-center
+            time.featured__time(datetime='2020-03-10') {{ format(new Date(ss.published_at), "MMM d, yyyy") }}
+
+      .w-full.border-t.border-gray-300.mt-16.mb-8
+
+    //- latest articles
+    .py-12
+      .content-container.mx-auto.px-4(class='sm:px-6 lg:px-8')
+        dl.space-y-10(class='sm:space-y-0 sm:grid sm:grid-cols-2 lg:grid-cols-3 sm:gap-6')
+          div(v-for="a in tt")
+            dt.h-full
+              nuxt-link.flex.flex-col.h-full.rounded-lg.overflow-hidden(:to="a.full_slug")
+                .flex-shrink-0
+                  img.h-48.w-full.object-cover(:src="a.content.featured_image.filename" alt='')
+                .flex-1.bg-white.p-6.flex.flex-col.justify-between
+                  .flex-1
+                    p.tile__category Latest
+                    a.block.mt-2(href='#')
+                      p.text-xl.font-semibold.text-gray-900 {{ a.content.title }}
+                  .mt-6.flex.items-center
+                    time.tile__time(datetime='2020-03-10') {{ format(new Date(a.published_at), "MMM d, yyyy") }}
+
+  //- about
+  section.mb-20
+    .relative.bg-dark-gray
+      .relative.h-56(class='sm:h-72 md:absolute md:left-0 md:h-full md:w-1/2')
+        img.w-full.h-full.object-cover(src='https://images.unsplash.com/photo-1449247709967-d4461a6a6103?ixlib=rb-0.3.5&q=85&fm=jpg&crop=entropy&cs=srgb&s=f221ed1b6e78feba8f81d3ccbb657877' alt='')
+        //- .absolute.inset-0.bg-gradient-to-r.from-teal-500.to-cyan-600(aria-hidden='true' style='mix-blend-mode: multiply;')
+
+      .relative.mx-auto.max-w-md.px-4.py-12(class='sm:max-w-5xl sm:px-6 sm:py-20 md:py-28 lg:px-8 lg:py-32')
+        div(class='md:ml-auto md:w-1/2 md:pl-10')
+          p.mt-2.text-white.text-3xl.font-extrabold.tracking-tight(class='sm:text-4xl')
+            | Hey there!
+          p.mt-3.text-lg.text-gray-300
+            | Thanks for stopping by, and taking the time to checkout my website.
+            | My name is Marrion, I'm a software developer. I specialize in everything
+            | Javascript (frontend, backend, mobile, you name it!).
+          .mt-8
+            .inline-flex.rounded-md.shadow
+              nuxt-link.inline-flex.items-center.justify-center.px-5.py-3.border.border-transparent.text-base.font-medium.rounded-3xl.text-gray-900.bg-light-gray(
+                to='/about'
+                class='hover:bg-gray-50'
+              )
+                | Continue reading
+
+  //- categories  
+  section
+    .content-container.mx-auto.py-16.px-4.gap-8(
+      v-for="article in articles.slice(1, 2)"
+      :key="article[0]"
+      class='sm:grid sm:px-6 lg:px-8 lg:grid-cols-3'
+    )
+      .flex.items-center.justify-center.col-span-2(class="lg:col-span-1")
+        .categories__intro.text-center.pb-4(class="lg:pb-0 lg:text-left")
+          p.mt-2.text-3xl.font-extrabold.text-gray-900.capitalize {{ article[0] }}
+          p.mt-4.text-lg.text-gray-500
+            | Wanna learn more about 
+            span.text-gray-500.capitalize {{ article[0] }}
+            | ? Check out all my the latest articles.
+            //- | Hire professional web designers and developers for full-time or remote work.
+          .inline-flex.rounded-3xl.mt-4(class="w-1/2")
+              nuxt-link.w-full.inline-flex.items-center.justify-center.px-5.py-3.border.border-transparent.text-base.font-medium.rounded-3xl.text-gray-100.bg-dark-gray(
+                :to="`/blog/${article[0]}`"
+                class='mb-4 md:mb-0 hover:bg-gray-50'
+              ) View all
+
+      dl.space-y-10(class='sm:grid sm:grid-cols-2 sm:col-span-2 sm:space-y-0 sm:gap-8')
+        div(v-for="a in article[1].slice(0, 2)")
+          dt.h-full
+            nuxt-link.flex.flex-col.rounded-lg.overflow-hidden.h-full(:to="a.full_slug")
+              .flex-shrink-0
+                img.h-48.w-full.object-cover(:src="a.content.featured_image.filename" alt='')
+              .flex-1.bg-white.p-6.flex.flex-col.justify-between
+                .flex-1
+                  p.tile__category {{ article[0] }}
+                  a.block.mt-2(href='#')
+                    p.text-xl.font-semibold.text-gray-900 {{ a.content.title }}
+                .mt-6.flex.items-center
+                  time.tile__time(datetime='2020-03-10') {{ format(new Date(a.published_at), "MMM d, yyyy") }}
 </template>
 
 <script lang="ts">
-import { pipe, reduce, toPairs } from 'ramda'
-import { defineComponent, onMounted, ref, Ref } from '@vue/composition-api'
+import { format } from 'date-fns'
+import { pipe, reduce, toPairs, head, path } from 'ramda'
+import { computed, defineComponent, onMounted, ref, Ref } from '@vue/composition-api'
 
 import { IStory } from '@/global-types'
 import useContext from '@/hooks/useContext'
@@ -36,6 +120,7 @@ export default defineComponent({
   setup() {
     const { repo } = useContext()
     const articles: Ref<any> = ref([])
+    const zz = pipe(head, path('1'))
 
     onMounted(async () => {
       try {
@@ -61,7 +146,54 @@ export default defineComponent({
       }
     })
 
-    return { articles }
+    return {
+      format,
+      articles,
+      ss: computed(() => articles.value.length && head(zz(articles.value))),
+      tt: computed(() => !articles.value.length ? [] : zz(articles.value).slice(1, 4))
+    }
   }
 })
 </script>
+
+<style lang="stylus" scoped>
+h1
+  font-size 32px
+  line-height 1.125
+  font-weight 600
+  letter-spacing .004em
+  +breakpoint('md')
+    font-size 48px
+    line-height 1.08349
+    font-weight 600
+    letter-spacing -.002em
+  +breakpoint('lg')
+    font-size 56px
+    line-height 1.07143
+    font-weight 600
+    letter-spacing -.005em
+
+.categories__intro
+  max-width 400px
+
+.tile
+  @extends .base-tile
+
+.featured
+  @extends .base-tile
+  &__title
+    font-size: 19px;
+    line-height: 1.21053;
+    font-weight: 700;
+    letter-spacing: .012em;
+    +breakpoint('md')
+      font-size 21px
+      line-height 1.19048
+      font-weight 700
+      letter-spacing .011em
+    +breakpoint('lg')
+      font-size 32px
+      line-height 1.125
+      font-weight 600
+      letter-spacing .004em
+</style>
