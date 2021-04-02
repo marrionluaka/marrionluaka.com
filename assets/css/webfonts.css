@@ -27,3 +27,13 @@
     url('../webfonts/sanfranciscodisplay-semibold-webfont.woff') format('woff'),
     url('../webfonts/sanfranciscodisplay-semibold-webfont.ttf') format('truetype');
 }
+
+@font-face {
+  font-family: "San-Francisco";
+  font-weight: 600;
+  src: url('../webfonts/sanfranciscodisplay-bold-webfont.eot');
+  src: url('../webfonts/sanfranciscodisplay-bold-webfont.eot') format('embedded-opentype'),
+    url('../webfonts/sanfranciscodisplay-bold-webfont.woff2') format('woff2'),
+    url('../webfonts/sanfranciscodisplay-bold-webfont.woff') format('woff'),
+    url('../webfonts/sanfranciscodisplay-bold-webfont.ttf') format('truetype');
+}
