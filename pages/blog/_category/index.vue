@@ -16,17 +16,13 @@ main.pt-20.bg-primary.pb-20
       .content-container.mx-auto.px-4(class='md:px-0')
         dl.space-y-10(class='sm:space-y-0 sm:grid sm:grid-cols-2 lg:grid-cols-3 sm:gap-8')
           div(v-for="article in articles" :key="article.id")
-            dt.h-full
-              nuxt-link.h-full.flex.flex-col.rounded-lg.overflow-hidden(:to="`/${article.full_slug}`")
-                .flex-shrink-0
-                  img.h-48.w-full.object-cover(:src="article.content.featured_image.filename" alt='')
-                .flex-1.bg-white.p-6.flex.flex-col.justify-between
-                  .flex-1
-                    p.text-sm.font-medium.text-cyan-600.uppercase Latest
-                    article.block.mt-2(href='#')
-                      p.text-xl.font-semibold.text-gray-900 {{ article.content.title }}
-                  .mt-6.flex.items-center
-                    time(datetime='2020-03-10') {{ format(new Date(article.published_at), "MMM d, yyyy") }}
+            PostTile(
+              :link="`/${article.full_slug}`"
+              :category="article[0]"
+              :title="article.content.title"
+              :published_at="article.published_at"
+              :imgSrc="article.content.featured_image.filename"
+            )
 
   Pagination(
     :options="opts"
@@ -38,13 +34,13 @@ main.pt-20.bg-primary.pb-20
 </template>
 
 <script lang="ts">
-import { format } from 'date-fns'
 import Pagination from 'vue-pagination-2'
 import { pipe, pluck, prepend } from 'ramda'
 import { Dictionary } from 'vue-router/types/router'
 import { defineComponent, watch, onMounted, ref, Ref, computed, ComputedRef } from '@vue/composition-api'
 
 import useContext from '@/hooks/useContext'
+import PostTile from '@/components/PostTile.vue'
 import Dropdown from '@/components/Dropdown.vue'
 import { IDropdownOption } from '@/global-types'
 import { DEFAULT_CATEGORY } from '@/global-const'
@@ -57,7 +53,7 @@ export default defineComponent({
 
   watchQuery: true,
 
-  components: { Dropdown, Pagination },
+  components: { Dropdown, Pagination, PostTile },
 
   asyncData: ({ query }) => {
     queryString.value = query.page
@@ -76,10 +72,8 @@ export default defineComponent({
       await navTo('/blog/' + category, category, 1)
     }
 
-    const paginate = async (page: number) => {
-      console.log('called', page)
+    const paginate = async (page: number) =>
       await navTo((`?page=${page}`), currentOption.value, page)
-    }
 
     const navTo = async (url: string, category: string | (string | null)[], page: number) => {
       history.pushState(null, '', url)
@@ -122,7 +116,6 @@ export default defineComponent({
 
     return {
       total,
-      format,
       paginate,
       articles,
       postPerPage,

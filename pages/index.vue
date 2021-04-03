@@ -15,19 +15,19 @@ main.pb-20
         .mt-16(class="md:mt-12")
           img.w-full(class='lg:h-full' src='~/assets/images/home-banner.png' alt='Inbox user interface')
 
-  //- latest article
+  //- featured article
   section.mt-32.mb-20
-    .content-container.mx-auto.px-4.featured(v-if="ss" class='sm:px-6 lg:px-8')
-      nuxt-link.grid-cols-3.block.rounded-lg.overflow-hidden(class="sm:grid" :to="ss.full_slug")
+    .content-container.mx-auto.px-4.featured(v-if="featuredArticle" class='sm:px-6 lg:px-8')
+      nuxt-link.grid-cols-3.block.rounded-lg.overflow-hidden(class="sm:grid" :to="featuredArticle.full_slug")
         .col-span-2
-          img(:src="ss.content.featured_image.filename" alt='')
+          img(:src="featuredArticle.content.featured_image.filename" alt='')
         .flex-1.bg-white.p-6.flex.flex-col.justify-between
           .flex-1
             p.featured__category Latest
             .mt-2(href='#')
-              p.featured__title {{ ss.content.title }}
+              p.featured__title {{ featuredArticle.content.title }}
           .mt-6.flex.items-center
-            time.featured__time(datetime='2020-03-10') {{ format(new Date(ss.published_at), "MMM d, yyyy") }}
+            time.featured__time(datetime='2020-03-10') {{ format(new Date(featuredArticle.published_at), "MMM d, yyyy") }}
 
       .w-full.border-t.border-gray-300.mt-16.mb-8
 
@@ -35,25 +35,20 @@ main.pb-20
     .py-12
       .content-container.mx-auto.px-4(class='sm:px-6 lg:px-8')
         dl.space-y-10(class='sm:space-y-0 sm:grid sm:grid-cols-2 lg:grid-cols-3 sm:gap-6')
-          div(v-for="a in tt")
-            dt.h-full
-              nuxt-link.flex.flex-col.h-full.rounded-lg.overflow-hidden(:to="a.full_slug")
-                .flex-shrink-0
-                  img.h-48.w-full.object-cover(:src="a.content.featured_image.filename" alt='')
-                .flex-1.bg-white.p-6.flex.flex-col.justify-between
-                  .flex-1
-                    p.tile__category Latest
-                    a.block.mt-2(href='#')
-                      p.text-xl.font-semibold.text-gray-900 {{ a.content.title }}
-                  .mt-6.flex.items-center
-                    time.tile__time(datetime='2020-03-10') {{ format(new Date(a.published_at), "MMM d, yyyy") }}
+          div(v-for="a in latestArticles")
+            PostTile(
+              :link="a.full_slug"
+              category="Latest"
+              :title="a.content.title"
+              :published_at="a.published_at"
+              :imgSrc="a.content.featured_image.filename"
+            )
 
   //- about
   section.mb-20
     .relative.bg-dark-gray
       .relative.h-56(class='sm:h-72 md:absolute md:left-0 md:h-full md:w-1/2')
-        img.w-full.h-full.object-cover(src='https://images.unsplash.com/photo-1449247709967-d4461a6a6103?ixlib=rb-0.3.5&q=85&fm=jpg&crop=entropy&cs=srgb&s=f221ed1b6e78feba8f81d3ccbb657877' alt='')
-        //- .absolute.inset-0.bg-gradient-to-r.from-teal-500.to-cyan-600(aria-hidden='true' style='mix-blend-mode: multiply;')
+        img.w-full.h-full.object-cover(src='~/assets/images/about-sec.jpeg' alt='Minimal Desk Setup')
 
       .relative.mx-auto.max-w-md.px-4.py-12(class='sm:max-w-5xl sm:px-6 sm:py-20 md:py-28 lg:px-8 lg:py-32')
         div(class='md:ml-auto md:w-1/2 md:pl-10')
@@ -94,17 +89,13 @@ main.pb-20
 
       dl.space-y-10(class='sm:grid sm:grid-cols-2 sm:col-span-2 sm:space-y-0 sm:gap-8')
         div(v-for="a in article[1].slice(0, 2)")
-          dt.h-full
-            nuxt-link.flex.flex-col.rounded-lg.overflow-hidden.h-full(:to="a.full_slug")
-              .flex-shrink-0
-                img.h-48.w-full.object-cover(:src="a.content.featured_image.filename" alt='')
-              .flex-1.bg-white.p-6.flex.flex-col.justify-between
-                .flex-1
-                  p.tile__category {{ article[0] }}
-                  a.block.mt-2(href='#')
-                    p.text-xl.font-semibold.text-gray-900 {{ a.content.title }}
-                .mt-6.flex.items-center
-                  time.tile__time(datetime='2020-03-10') {{ format(new Date(a.published_at), "MMM d, yyyy") }}
+          PostTile(
+            :link="a.full_slug"
+            :category="article[0]"
+            :title="a.content.title"
+            :published_at="a.published_at"
+            :imgSrc="a.content.featured_image.filename"
+          )
 </template>
 
 <script lang="ts">
@@ -114,17 +105,20 @@ import { computed, defineComponent, onMounted, ref, Ref } from '@vue/composition
 
 import { IStory } from '@/global-types'
 import useContext from '@/hooks/useContext'
+import PostTile from '@/components/PostTile.vue'
 import { DEFAULT_CATEGORY } from '@/global-const'
 
 export default defineComponent({
+  components: { PostTile },
+
   setup() {
-    const { repo } = useContext()
+    const { storyApi } = useContext()
     const articles: Ref<any> = ref([])
-    const zz = pipe(head, path('1'))
+    const getLatestArticles = pipe(head, path('1'))
 
     onMounted(async () => {
       try {
-        const { data: { stories } } = await repo.getResources({ starts_with: 'article/', sort_by: 'position:asc' })
+        const { data: { stories } } = await storyApi.get('cdn/stories/', { starts_with: 'article/', sort_by: 'position:asc' })
 
         articles.value = pipe(
           reduce((acc: any, story: IStory): { [key:string]: IStory[] } => {
@@ -149,8 +143,8 @@ export default defineComponent({
     return {
       format,
       articles,
-      ss: computed(() => articles.value.length && head(zz(articles.value))),
-      tt: computed(() => !articles.value.length ? [] : zz(articles.value).slice(1, 4))
+      featuredArticle: computed(() => articles.value.length && head(getLatestArticles(articles.value))),
+      latestArticles: computed(() => !articles.value.length ? [] : getLatestArticles(articles.value).slice(1, 4))
     }
   }
 })
@@ -175,9 +169,6 @@ h1
 
 .categories__intro
   max-width 400px
-
-.tile
-  @extends .base-tile
 
 .featured
   @extends .base-tile

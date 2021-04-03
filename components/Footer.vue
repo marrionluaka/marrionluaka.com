@@ -1,7 +1,7 @@
 <template lang="pug">
   footer.footer.bg-dark-gray.py-8
     .content-container.mx-auto.px-6
-      #to-top(ref='toTop')
+      #to-top(ref='toTop' v-scroll-to-top)
         font-awesome-icon(:icon="['fas', 'long-arrow-alt-up']")
       .flex.flex-col(class="md:flex-row md:justify-between md:items-center")
         .footer__content
@@ -12,32 +12,20 @@
             li.mr-4
               a(href='https://linkedin.com/in/marrionluaka' target='_blank')
                 font-awesome-icon.w-6.h-6.icons__linkedin(:icon="['fab', 'linkedin']")
-
             li
               a(href='https://github.com/marrionluaka' target='_blank')
                 font-awesome-icon.w-6.h-6.icons__github(:icon="['fab', 'github']")
 </template>
 
-<script>
-export default {
-  mounted() {
-    // this.$refs.toTop.addEventListener('click', e => {
-    //   document.getElementById('top').scrollIntoView({ behavior: 'smooth' })
-    // })
-    document.addEventListener('scroll', this.toggleToTop.bind(this, this.$refs.toTop))
-  },
+<script lang="ts">
+import { defineComponent } from '@vue/composition-api'
+import scrollToTop from './directives/scroll-to-top'
 
-  methods: {
-    toggleToTop(toTop) {
-      if (window.scrollY > 5) {
-        toTop.classList.add('show')
-      } else {
-        toTop.classList.remove('show')
-      }
-    }
-  }
-}
+export default defineComponent({
+  directives: { scrollToTop }
+})
 </script>
+
 
 <style lang="stylus" scoped>
   #to-top
