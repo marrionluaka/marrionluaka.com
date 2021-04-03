@@ -87,7 +87,7 @@ main.pb-20
                 class='mb-4 md:mb-0 hover:bg-gray-50'
               ) View all
 
-      dl.space-y-10(class='sm:grid sm:grid-cols-2 sm:col-span-2 sm:space-y-0 sm:gap-8')
+      dl.space-y-10(class='sm:grid sm:grid-cols-2 sm:col-span-2 sm:space-y-0 sm:gap-6')
         div(v-for="a in article[1].slice(0, 2)")
           PostTile(
             :link="a.full_slug"
