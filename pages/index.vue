@@ -60,9 +60,9 @@ main.pb-20
             | Javascript (frontend, backend, mobile, you name it!).
           .mt-8
             .inline-flex.rounded-md.shadow
-              nuxt-link.inline-flex.items-center.justify-center.px-5.py-3.border.border-transparent.text-base.font-medium.rounded-3xl.text-gray-900.bg-light-gray(
+              nuxt-link.inline-flex.items-center.justify-center.px-5.border.border-transparent.text-base.font-medium.rounded-3xl.text-gray-900.bg-light-gray(
                 to='/about'
-                class='hover:bg-gray-50'
+                class='py-2.5 hover:bg-gray-50'
               )
                 | Continue reading
 
@@ -82,7 +82,7 @@ main.pb-20
             | ? Check out all my the latest articles.
             //- | Hire professional web designers and developers for full-time or remote work.
           .inline-flex.rounded-3xl.mt-4(class="w-1/2")
-              nuxt-link.w-full.inline-flex.items-center.justify-center.px-5.py-3.border.border-transparent.text-base.font-medium.rounded-3xl.text-gray-100.bg-dark-gray(
+              nuxt-link.w-full.inline-flex.items-center.justify-center.px-5.py-2.border.border-transparent.text-base.font-medium.rounded-3xl.text-gray-100.bg-dark-gray(
                 :to="`/blog/${article[0]}`"
                 class='mb-4 md:mb-0 hover:bg-gray-50'
               ) View all
