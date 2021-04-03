@@ -27,14 +27,11 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted } from '@vue/composition-api'
+import { defineComponent } from '@vue/composition-api'
 
 export default defineComponent({
   name: 'MyPagination',
-  props: ['props'],
-  setup(props) {
-    onMounted(() => console.log('props', props.props))
-  }
+  props: ['props']
 })
 </script>
 
