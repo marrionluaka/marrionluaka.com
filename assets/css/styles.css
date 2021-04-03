@@ -105,18 +105,3 @@ img {
     margin-bottom: 16px;
   }
 }
-.base-tile__category {
-  color: #86868b;
-  font-size: 12px;
-  font-weight: 600;
-  line-height: 1.33337;
-  letter-spacing: -0.01em;
-  text-transform: uppercase;
-}
-.base-tile__time {
-  color: #86868b;
-  font-size: 14px;
-  font-weight: 600;
-  line-height: 1.28577;
-  letter-spacing: -0.016em;
-}

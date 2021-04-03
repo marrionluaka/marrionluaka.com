@@ -17,15 +17,14 @@ main.pb-20
 
   //- featured article
   section.mt-32.mb-20
-    .content-container.mx-auto.px-4.featured(v-if="featuredArticle" class='sm:px-6 lg:px-8')
+    .featured.content-container.mx-auto.px-4(v-if="featuredArticle" class='sm:px-6 lg:px-8')
       nuxt-link.grid-cols-3.block.rounded-lg.overflow-hidden(class="sm:grid" :to="featuredArticle.full_slug")
-        .col-span-2
-          img(:src="featuredArticle.content.featured_image.filename" alt='')
+        .featured__img.col-span-2.overflow-hidden(class="sm:h-72 lg:h-96")
+          .h-full.bg-cover.bg-center.bg-no-repeat(:style="{ backgroundImage: `url(${featuredArticle.content.featured_image.filename})` }")
         .flex-1.bg-white.p-6.flex.flex-col.justify-between
           .flex-1
             p.featured__category Latest
-            .mt-2(href='#')
-              p.featured__title {{ featuredArticle.content.title }}
+            p.featured__title {{ featuredArticle.content.title }}
           .mt-6.flex.items-center
             time.featured__time(datetime='2020-03-10') {{ format(new Date(featuredArticle.published_at), "MMM d, yyyy") }}
 
@@ -151,6 +150,8 @@ export default defineComponent({
 </script>
 
 <style lang="stylus" scoped>
+@import '~assets/styl/components/_tile.styl'
+
 h1
   font-size 32px
   line-height 1.125

@@ -1,8 +1,8 @@
 <template lang="pug">
 dt.tile.h-full
   nuxt-link.flex.flex-col.h-full.rounded-lg.overflow-hidden(:to="link")
-    .tile__img.flex-shrink-0
-      img.h-48.w-full.object-cover(:src="imgSrc" :alt="imgAlt")
+    .tile__img.flex-shrink-0.overflow-hidden
+      .h-full.bg-cover.bg-center.bg-no-repeat(:style="styleObj")
     .tile__content.flex-1.bg-white.p-6.flex.flex-col.justify-between
       .flex-1
         p.tile__category(v-if="category") {{ category }}
@@ -44,13 +44,21 @@ export default defineComponent({
     }
   },
 
-  setup() {
-    return { format }
+  setup(props) {
+    const styleObj = { backgroundImage: `url(${props.imgSrc}` }
+    return { format, styleObj }
   }
 })
 </script>
 
 <style lang="stylus" scoped>
+@import '~assets/styl/components/_tile.styl'
+
 .tile
   @extends .base-tile
+  &__img
+    width 100%
+    height 170px
+    min-height auto
+
 </style>
