@@ -1,8 +1,7 @@
 <template lang="pug">
-._flex._flex-col#top(:class='$nuxt.$route.name.toLocaleLowerCase()')
+._flex._flex-col.min-h-screen#top(:class='$nuxt.$route.name.toLocaleLowerCase()')
   Header
-  ._flex-grow
-    nuxt
+  nuxt._flex-grow
   Footer
 </template>
 

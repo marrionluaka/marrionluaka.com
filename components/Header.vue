@@ -23,14 +23,11 @@ nav
     +breakpoint('desktop-small')
       padding-bottom: 0
 
-    img
-      // width 45px
-      +breakpoint('md')
-        // width 56px
-        padding 8px
-
   .nuxt-link-exact-active.nuxt-link-active
-    color: $dark-grey
+    color: darken($white, 25%)
+
+  li a:hover
+    color: darken($white, 25%)
 
   li
     // .subscribe

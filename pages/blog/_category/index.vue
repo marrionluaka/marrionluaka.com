@@ -14,19 +14,24 @@ main.pt-20.bg-primary.pb-20
   section
     .py-12
       .content-container.mx-auto.px-4(class='md:px-0')
-        dl.space-y-10(class='sm:space-y-0 sm:grid sm:grid-cols-2 lg:grid-cols-3 sm:gap-8')
+        transition-group.space-y-10(
+          name="fade"
+          tag="dl"
+          class='sm:space-y-0 sm:grid sm:grid-cols-2 lg:grid-cols-3 sm:gap-8'
+        )
           template(v-if="isLoading")
             div(v-for="(_, i) in list" :key="i")
               TileSkeleton
-          template(v-else)
-            div(v-for="article in articles" :key="article.id")
-              PostTile(
-                :link="`/${article.full_slug}`"
-                :category="article[0]"
-                :title="article.content.title"
-                :published_at="article.published_at"
-                :imgSrc="article.content.featured_image.filename"
-              )
+
+        dl.space-y-10(class='sm:space-y-0 sm:grid sm:grid-cols-2 lg:grid-cols-3 sm:gap-8')
+          div(v-for="article in articles" :key="article.id")
+            PostTile(
+              :link="`/${article.full_slug}`"
+              :category="article[0]"
+              :title="article.content.title"
+              :published_at="article.published_at"
+              :imgSrc="article.content.featured_image.filename"
+            )
 
   Pagination(
     :options="opts"
@@ -99,9 +104,14 @@ export default defineComponent({
     const fetchArticlesProxy = (category: string | (string | null)[], page: number): void => {
       const params = !category || category === DEFAULT_CATEGORY ? { sort_by: 'position:asc' } : { with_tag: category }
       isLoading.value = true
+
       setTimeout(async () => {
         await fetchArticles({ ...params, page })
         isLoading.value = false
+
+        if (!articles.value.length) {
+          context.error({ statusCode: 404 })
+        }
       }, 1000)
     }
 
@@ -124,6 +134,7 @@ export default defineComponent({
         setArticles(params, query)
       } catch (e) {
         console.warn(e)
+        context.error({ statusCode: 404 })
       }
     })
 
@@ -143,3 +154,10 @@ export default defineComponent({
   }
 })
 </script>
+
+<style lang="stylus" scoped>
+.fade-enter-active, .fade-leave-active
+  transition opacity .5s
+.fade-enter, .fade-leave-to
+  opacity 0
+</style>

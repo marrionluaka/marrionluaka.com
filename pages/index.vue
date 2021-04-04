@@ -83,7 +83,7 @@ main.pb-20
           .inline-flex.rounded-3xl.mt-4(class="w-1/2")
               nuxt-link.w-full.inline-flex.items-center.justify-center.px-5.py-2.border.border-transparent.text-base.font-medium.rounded-3xl.text-gray-100.bg-dark-gray(
                 :to="`/blog/${article[0]}`"
-                class='mb-4 md:mb-0 hover:bg-gray-50'
+                class='mb-4 md:mb-0 hover:bg-gray-50 hover:text-grey-900 hover:bg-light-gray'
               ) View all
 
       dl.space-y-10(class='sm:grid sm:grid-cols-2 sm:col-span-2 sm:space-y-0 sm:gap-6')
