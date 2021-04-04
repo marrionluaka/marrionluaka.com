@@ -1,6 +1,7 @@
 export default {
   // Target: https://go.nuxtjs.dev/config-target
   target: 'static',
+  ssr: false,
 
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
@@ -75,7 +76,7 @@ export default {
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
-    extend (config, ctx) {
+    extend (config) {
       config.module.rules.forEach((rule) => {
         if (rule.test.toString() === '/\\.vue$/') {
           rule.options.optimizeSSR = false

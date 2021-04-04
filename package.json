@@ -5,10 +5,10 @@
   "scripts": {
     "dev": "npm-run-all --parallel develop watch:styl",
     "develop": "nuxt-ts",
-    "build": "nuxt-ts build",
+    "build": "npm-run-all --parallel build:css deploy",
     "start": "nuxt-ts start",
-    "deploy": "nuxt-ts generate",
-    "generate": "npm-run-all --parallel build:css deploy",
+    "deploy": "nuxt-ts build",
+    "generate": "nuxt-ts generate",
     "watch:styl": "stylus -w assets/styl/styles.styl -o assets/css/styles.css",
     "build:css": "npm-run-all compile:styl prefix:css compress:css",
     "compile:styl": "stylus assets/styl/styles.styl -o assets/css/styles.prod.css",
