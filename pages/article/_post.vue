@@ -4,6 +4,7 @@
   SocialSharing
   transition(name="fade")
     Preloader(v-if="isLoading")
+
   div(v-if="article")
     section.article-header
       .article-header__title
@@ -40,9 +41,6 @@
     TableOfContent(v-if="article.toc" :content="md.render(article.toc)")
     PostContent(:content="md.render(article.body)")
     RelatedPosts(:uuid="uuid")
-
-  div(v-else)
-    | Whoops! No article found.
 </template>
 
 <script lang="ts">
