@@ -75,5 +75,12 @@ export default {
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
+    extend (config, ctx) {
+      config.module.rules.forEach((rule) => {
+        if (rule.test.toString() === '/\\.vue$/') {
+          rule.options.optimizeSSR = false
+        }
+      })
+    }
   }
 }
