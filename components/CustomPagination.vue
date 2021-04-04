@@ -1,5 +1,5 @@
 <template lang="pug">
-.content-container.mx-auto.flex.items-center.justify-center.px-4(class='sm:px-6 lg:px-8')(:class='props.theme.wrapper')
+.content-container.mx-auto.flex.items-center.justify-center.px-4(class='sm:px-6 lg:px-8')
   nav(:class='props.theme.nav')
     ul.flex.items-center.flex-wrap(v-show='props.showPagination' :class='props.theme.list')
       li(v-if='props.hasEdgeNav' :class='props.theme.firstPage' @click='props.setFirstPage')

@@ -49,19 +49,6 @@ export default {
     '@nuxtjs/tailwindcss',
   ],
 
-  tailwindcss: {
-    config: {
-      theme: {
-        backgroundColor: theme => ({
-         ...theme('colors'),
-         'primary': ' #f5f5f7',
-         'dark-gray': '#161617',
-         'light-gray': '#f5f5f7'
-        })
-      }
-    }
-  },
-
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
     '@nuxtjs/style-resources',
