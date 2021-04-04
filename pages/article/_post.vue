@@ -1,6 +1,7 @@
 <template lang="pug">
 .article.container.my-12.mx-auto.px-4.pb-20(class="lg:px-52 xl:px-64")
   ProgressBar
+  SocialSharing
   transition(name="fade")
     Preloader(v-if="isLoading")
   div(v-if="article")
@@ -58,6 +59,7 @@ import Preloader from '@/components/Preloader.vue'
 import ProgressBar from '@/components/ProgressBar.vue'
 import PostContent from '@/components/PostContent.vue'
 import RelatedPosts from '@/components/RelatedPosts.vue'
+import SocialSharing from '@/components/SocialSharing.vue'
 import TableOfContent from '@/components/TableOfContent.vue'
 
 export default defineComponent({
@@ -66,7 +68,8 @@ export default defineComponent({
     PostContent,
     TableOfContent,
     RelatedPosts,
-    Preloader
+    Preloader,
+    SocialSharing
   },
 
   setup() {

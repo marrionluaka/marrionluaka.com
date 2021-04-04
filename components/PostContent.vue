@@ -85,7 +85,6 @@ export default defineComponent({
     max-width 744px
     padding 32px
     font-size 13px
-    margin 15px auto 50px
     border-radius 5px
     font-family "Operator Mono", Consolas, Menlo, Monaco, source-code-pro, "Courier New", monospace
     background rgb(41, 44, 52)
