@@ -43,6 +43,7 @@ main.pt-20.bg-primary.pb-20
 </template>
 
 <script lang="ts">
+// @ts-ignore
 import Pagination from 'vue-pagination-2'
 import { pipe, pluck, prepend } from 'ramda'
 import { Dictionary } from 'vue-router/types/router'
@@ -130,7 +131,7 @@ export default defineComponent({
         const { params, query } = context.route
         const { data: { tags } } = await storyApi.get('cdn/tags/', { starts_with: 'article/' })
 
-        categories.value = pipe(pluck('name'), prepend(DEFAULT_CATEGORY))(tags)
+        categories.value = pipe<any, any, any>(pluck('name'), prepend(DEFAULT_CATEGORY))(tags)
         setArticles(params, query)
       } catch (e) {
         console.warn(e)

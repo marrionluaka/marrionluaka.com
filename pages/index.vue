@@ -113,7 +113,7 @@ export default defineComponent({
   setup() {
     const { storyApi } = useContext()
     const articles: Ref<any> = ref([])
-    const getLatestArticles = pipe(head, path('1'))
+    const getLatestArticles = pipe<any, any, any>(head, path<any>(['1']))
 
     onMounted(async () => {
       try {
