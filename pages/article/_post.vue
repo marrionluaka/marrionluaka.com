@@ -113,10 +113,7 @@ export default defineComponent({
 </script>
 
 <style lang="stylus" scoped>
-.fade-enter-active, .fade-leave-active
-  transition opacity .5s
-.fade-enter, .fade-leave-to
-  opacity 0
+@import '~/assets/styl/_transitions.styl'
 
 .article
   &-header

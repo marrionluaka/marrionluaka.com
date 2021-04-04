@@ -3,8 +3,10 @@
   .related-posts__wrapper.flex.justify-between
     nuxt-link(v-if="!!prev" :to='prev')
       span.related-posts__left < Previous
+      //- p {{ prevPostTitle }}
     nuxt-link(v-if="!!next" :to='next')
       span.related-posts__right Next >
+      //- p {{ nextPostTitle }}
 </template>
 
 <script lang="ts">
@@ -23,11 +25,11 @@ export default defineComponent({
 
   setup(props) {
     const { storyApi } = useContext()
-    const { prev, next, setPrevNextLinks } = usePostLinks(storyApi)
+    const { prev, next, nextPostTitle, prevPostTitle, setPrevNextLinks } = usePostLinks(storyApi)
 
     onMounted(async () => await setPrevNextLinks(props.uuid))
 
-    return { prev, next }
+    return { prev, next, nextPostTitle, prevPostTitle }
   }
 })
 </script>

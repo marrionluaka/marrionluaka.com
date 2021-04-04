@@ -7,6 +7,7 @@ interface IPostLinks {
 }
 
 interface ILink {
+  name: string
   position: number
   real_path: string
 }
@@ -19,7 +20,9 @@ interface IData {
 
 export default function usePostLinks(storyApi: { get: (str: string, opts: any) => Promise<IData> }) {
   const next: Ref<string> = ref('')
+  const nextPostTitle: Ref<string> = ref('')
   const prev: Ref<string> = ref('')
+  const prevPostTitle: Ref<string> = ref('')
 
   const setPrevNextLinks = async (uuid: string): Promise<void> => {
     const { data: { links } } = await storyApi.get('cdn/links/', { starts_with: 'article/' })
@@ -46,8 +49,10 @@ export default function usePostLinks(storyApi: { get: (str: string, opts: any) =
     )(links)
 
     next.value = nextArticle?.real_path
+    nextPostTitle.value = nextArticle?.name
     prev.value = prevArticle?.real_path
+    prevPostTitle.value = prevArticle?.name
   }
 
-  return { next, prev, setPrevNextLinks }
+  return { next, prev, nextPostTitle, prevPostTitle, setPrevNextLinks }
 }
