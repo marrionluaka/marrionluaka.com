@@ -71,7 +71,7 @@ export default defineComponent({
 
   setup() {
     const currentPage: Ref<number> = ref(1)
-    const isLoading: Ref<boolean> = ref(false)
+    const isLoading: Ref<boolean> = ref(true)
     const categories: Ref<string[]> = ref([])
     const currentOption: Ref<string | (string | null)[]> = ref('')
     const list: Ref<any[]> = ref([...Array(12)])

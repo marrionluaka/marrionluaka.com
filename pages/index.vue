@@ -10,7 +10,7 @@ main.pb-20
                 | Hi, I’m Marrion Luaka.
               p.mt-4.text-base(class='md:text-lg')
                 | I like making things. I turn ideas into reality. 
-                | On this website, I share my thoughts on programming and various other topics.
+                | On this website, I share my thoughts on programming and various other topics. Welcome!
 
         .mt-16(class="md:mt-12")
           img.w-full(class='lg:h-full' src='~/assets/images/home-banner.png' alt='Inbox user interface')
@@ -55,7 +55,7 @@ main.pb-20
             | Hey there!
           p.mt-3.text-lg.text-gray-300
             | Thanks for stopping by, and taking the time to checkout my website.
-            | My name is Marrion, I'm a software developer. I specialize in everything
+            | My name is Marrion, I'm a Software Developer. I specialize in everything
             | Javascript (frontend, backend, mobile, you name it!).
           .mt-8
             .inline-flex.rounded-md.shadow

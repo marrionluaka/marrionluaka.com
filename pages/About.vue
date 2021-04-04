@@ -5,8 +5,7 @@
       span.ml-underline
       .intro__content
         p I'm a Frontend developer who's always looking for new knowledge to master. 
-          | Currently building cutting edge products with THREEjs, WebRTC and Vue.
-          | I'm also a funtional programming enthusiast with a particular interest in ramda.js.
+          | I am currently building cutting edge products in Vuejs.
 
     img.banner(src='~assets/images/about_banner.png')
 
@@ -41,6 +40,7 @@
           span.ml-underline
           ul.summary__list
             li.text-lg Web Development
+            li.text-lg WebSocket
             li.text-lg WebRTC
             li.text-lg Hybrid app development (React Navitve)
             li.text-lg Responsive user experience
