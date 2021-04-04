@@ -1,10 +1,9 @@
 <template lang="pug">
 .article.container.my-12.mx-auto.px-4.pb-20(class="lg:px-52 xl:px-64")
   ProgressBar
-  div(v-if="isLoading")
-    | loading...
-
-  div(v-else-if="article")
+  transition(name="fade")
+    Preloader(v-if="isLoading")
+  div(v-if="article")
     section.article-header
       .article-header__title
         h1(class="md:text-4xl") {{ article.title }}
@@ -55,6 +54,7 @@ import useContext from '@/hooks/useContext'
 import useMarkdown from '@/hooks/useMarkdown'
 import useDateFormatter from '@/hooks/useDateFormatter'
 
+import Preloader from '@/components/Preloader.vue'
 import ProgressBar from '@/components/ProgressBar.vue'
 import PostContent from '@/components/PostContent.vue'
 import RelatedPosts from '@/components/RelatedPosts.vue'
@@ -65,7 +65,8 @@ export default defineComponent({
     ProgressBar,
     PostContent,
     TableOfContent,
-    RelatedPosts
+    RelatedPosts,
+    Preloader
   },
 
   setup() {
@@ -88,11 +89,12 @@ export default defineComponent({
         uuid.value = story.uuid
         article.value = story.content
         formatDate(story.published_at)
+
+        setTimeout(() => (isLoading.value = false), 1500)
       } catch (e) {
         console.warn(e)
-        context.error({ statusCode: 404 })
-      } finally {
         isLoading.value = false
+        context.error({ statusCode: 404 })
       }
     })
 
@@ -108,6 +110,11 @@ export default defineComponent({
 </script>
 
 <style lang="stylus" scoped>
+.fade-enter-active, .fade-leave-active
+  transition opacity .5s
+.fade-enter, .fade-leave-to
+  opacity 0
+
 .article
   &-header
     text-align center
