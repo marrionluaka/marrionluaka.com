@@ -5,13 +5,21 @@ export default {
 
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
-    title: 'nuxt_blog',
+    title: 'Marrion Luaka',
+    script: [
+      { 
+        src: 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js',
+        'data-ad-client': 'ca-pub-5157989864167195',
+        defer: true
+      }
+    ],
     htmlAttrs: {
       lang: 'en'
     },
     meta: [
       { charset: 'utf-8' },
-      { name: 'viewport', content: 'width=device-width, initial-scale=1' },
+      { name: 'monetization', content: '$ilp.uphold.com/7fNpxDJkxMmq' },
+      { name: 'viewport', content: 'width=device-width, initial-scale=1, shrink-to-fit=no' },
       { hid: 'description', name: 'description', content: '' }
     ],
     link: [
@@ -48,6 +56,8 @@ export default {
     '@nuxt/typescript-build',
     // https://go.nuxtjs.dev/tailwindcss
     '@nuxtjs/tailwindcss',
+    // Doc: https://github.com/nuxt-community/analytics-module
+    ['@nuxtjs/google-analytics', { id: 'UA-87349469-1' }]
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
