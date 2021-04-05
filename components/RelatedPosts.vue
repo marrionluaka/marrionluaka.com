@@ -1,12 +1,22 @@
 <template lang="pug">
 .related-posts.overflow-hidden(v-if='prev || next')
   .related-posts__wrapper.flex.justify-between
-    nuxt-link(v-if="!!prev" :to='prev')
-      span.related-posts__left < Previous
-      //- p {{ prevPostTitle }}
-    nuxt-link(v-if="!!next" :to='next')
-      span.related-posts__right Next >
-      //- p {{ nextPostTitle }}
+    nuxt-link.inline-block.flex(v-if="!!prev" :to='prev')
+      .flex.items-center.mr-4
+        svg.w-6.h-6(fill='none' stroke='currentColor' viewbox='0 0 24 24' xmlns='http://www.w3.org/2000/svg')
+          path(stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M15 19l-7-7 7-7')
+      .text-left
+        p.text-lg.font-semibold(class="sm:text-xl") Previous
+        p.text-base.hidden(class="sm:block") {{ prevPostTitle }}
+
+    nuxt-link.inline-block.flex(v-if="!!next" :to='next')
+      .ml-8.text-right
+        p.text-lg.font-semibold(class="sm:text-xl") Next
+        p.text-base.hidden(class="sm:block") {{ nextPostTitle }}
+      .flex.items-center.ml-4
+        svg.w-6.h-6(fill='none' stroke='currentColor' viewbox='0 0 24 24' xmlns='http://www.w3.org/2000/svg')
+          path(stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M9 5l7 7-7 7')
+
 </template>
 
 <script lang="ts">

@@ -30,8 +30,8 @@ export default function usePostLinks(storyApi: { get: (str: string, opts: any) =
     const matchedRoute: ILink = links[uuid]
     const pos: number = matchedRoute.position
 
-    const { prev: prevArticle, next: nextArticle } = pipe(
-      (links: { [key: string]: ILink }) => values(links),
+    const { prev: prevArticle, next: nextArticle } = pipe<{ [key: string]: ILink }, ILink[], IPostLinks>(
+      (links: { [key: string]: ILink }): ILink[] => values(links),
       reduce(
         (acc: IPostLinks, val: ILink) => {
           if (val.position === pos + 10) {
