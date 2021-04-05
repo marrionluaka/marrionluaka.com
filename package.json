@@ -17,6 +17,7 @@
   },
   "dependencies": {
     "@nuxt/typescript-runtime": "^2.0.1",
+    "@nuxtjs/google-analytics": "2.4.0",
     "@nuxtjs/style-resources": "1.0.0",
     "@types/ramda": "0.27.38",
     "core-js": "^3.8.3",
