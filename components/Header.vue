@@ -1,4 +1,4 @@
-<template lang="pug" functional>
+<template lang="pug">
   header.py-8.bg-white.w-full.px-4
     nav.content-container.mx-auto.flex.flex-col(class="md:flex-row md:justify-between")
       .logo

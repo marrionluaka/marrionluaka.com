@@ -1,4 +1,4 @@
-<template lang="pug" functional>
+<template lang="pug">
 dt.tile.h-full
   div.flex.flex-col.h-full.rounded-lg.overflow-hidden
     .tile__img.flex-shrink-0.overflow-hidden.h-48.animate-skeleton.bg-blue-200

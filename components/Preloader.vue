@@ -1,4 +1,4 @@
-<template lang="pug" functional>
+<template lang="pug">
 .preloader
   .dot-container
     .dot.dot--one
