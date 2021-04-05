@@ -49,8 +49,7 @@ export default defineComponent({
   &__wrapper
     margin 56px 0
 
-  &__left, &__right
-    padding 7px 20px
-    border 1px solid
-    border-radius 4px
+  a:hover
+    p, path
+      color darken(white, 50%)
 </style>
