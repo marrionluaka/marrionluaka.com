@@ -75,9 +75,9 @@ main.pb-20
       .flex.items-center.justify-center.col-span-2(class="lg:col-span-1")
         .categories__intro.text-center.pb-4(class="lg:pb-0 lg:text-left")
           p.mt-2.text-3xl.font-extrabold.text-gray-900.capitalize {{ article[0] }}
-          p.mt-4.text-lg.text-gray-500
+          p.mt-4.text-lg
             | Wanna learn more about 
-            span.text-gray-500.capitalize {{ article[0] }}
+            span.capitalize {{ article[0] }}
             | ? Check out all my the latest articles.
             //- | Hire professional web designers and developers for full-time or remote work.
           .inline-flex.rounded-3xl.mt-4(class="w-1/2")
