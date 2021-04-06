@@ -51,7 +51,7 @@ export default {
     ]
   },
 
-  loading: "~/components/Preloader.vue",
+  // loading: "~/components/Preloader.vue",
 
   // Global CSS: https://go.nuxtjs.dev/config-css
   css: [
