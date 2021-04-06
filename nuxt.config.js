@@ -20,12 +20,38 @@ export default {
       { charset: 'utf-8' },
       { name: 'monetization', content: '$ilp.uphold.com/7fNpxDJkxMmq' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1, shrink-to-fit=no' },
-      { hid: 'description', name: 'description', content: '' }
+      {
+        hid: "description",
+        name: "description",
+        content: "Marrion Luaka is a Software Developer."
+      },
+      {
+        hid: "og:description",
+        property: "og:description",
+        content: "Marrion Luaka is a Software Developer."
+      },
+      {
+        hid: "og:title",
+        property: "og:title",
+        content: "Marrion Luaka"
+      },
+      {
+        hid: "og:type",
+        property: "og:type",
+        content: "website"
+      },
+      {
+        hid: "og:url",
+        property: "og:url",
+        content: "https://www.marrionluaka.com"
+      },
     ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
     ]
   },
+
+  loading: "~/components/Preloader.vue",
 
   // Global CSS: https://go.nuxtjs.dev/config-css
   css: [
