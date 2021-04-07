@@ -1,5 +1,5 @@
 <template lang="pug">
-.flex.items-center.justify-center.pb-4(class="space-x-2.5")
+.share-btn.flex.items-center.justify-center.pb-4(class="space-x-2.5")
   a.btn.btn-fb.cursor-pointer.border-none.w-8.h-8.flex.justify-center.items-center.rounded-full(data-id='fb')
     font-awesome-icon.text-white.text-base(:icon="faFacebookF")
   a.btn.btn-tw.cursor-pointer.border-none.w-8.h-8.flex.justify-center.items-center.rounded-full(data-id='tw')
@@ -27,9 +27,9 @@ export default defineComponent({
     return {
       faTwitter: computed(() => faTwitter),
       faWhatsapp: computed(() => faWhatsapp),
-      faRedditAlien: computed(() => faRedditAlien),
       faFacebookF: computed(() => faFacebookF),
-      faLinkedinIn: computed(() => faLinkedinIn)
+      faLinkedinIn: computed(() => faLinkedinIn),
+      faRedditAlien: computed(() => faRedditAlien)
     }
   },
 })
