@@ -6,13 +6,13 @@
         svg.w-6.h-6(fill='none' stroke='currentColor' viewbox='0 0 24 24' xmlns='http://www.w3.org/2000/svg')
           path(stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M15 19l-7-7 7-7')
       .text-left
-        p.text-lg.font-semibold(class="sm:text-xl") Previous
-        p.text-base.hidden(class="sm:block") {{ prevPostTitle }}
+        p.text-base Previous
+        p.hidden.text-lg.font-semibold(class="sm:block sm:text-xl") {{ prevPostTitle }}
 
     nuxt-link.inline-block.flex(v-if="!!next" :to='next')
       .ml-8.text-right
-        p.text-lg.font-semibold(class="sm:text-xl") Next
-        p.text-base.hidden(class="sm:block") {{ nextPostTitle }}
+        p.text-base Next
+        p.hidden.text-lg.font-semibold(class="sm:block sm:text-xl") {{ nextPostTitle }}
       .flex.items-center.ml-4
         svg.w-6.h-6(fill='none' stroke='currentColor' viewbox='0 0 24 24' xmlns='http://www.w3.org/2000/svg')
           path(stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M9 5l7 7-7 7')
