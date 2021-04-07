@@ -1,7 +1,7 @@
 <template lang="pug">
-._flex._flex-col.min-h-screen#top(:class='$nuxt.$route.name.toLocaleLowerCase()')
+.flex.flex-col.min-h-screen#top(:class='$nuxt.$route.name.toLocaleLowerCase()')
   Header
-  nuxt._flex-grow
+  nuxt.flex-grow
   Footer
 </template>
 
@@ -15,3 +15,7 @@ export default defineComponent({
   components: { Header, Footer },
 })
 </script>
+
+<style lang="stylus" scoped>
+// @import '~/assets/styl/_transitions.styl'
+</style>

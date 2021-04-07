@@ -19,19 +19,18 @@ main.pt-20.bg-primary.pb-20
           tag="dl"
           class='sm:space-y-0 sm:grid sm:grid-cols-2 lg:grid-cols-3 sm:gap-8'
         )
-          template(v-if="isLoading")
+          template(v-if="!isLoading")
+            div(v-for="article in articles" :key="article.id")
+              PostTile(
+                :link="`/${article.full_slug}`"
+                :category="article[0]"
+                :title="article.content.title"
+                :published_at="article.published_at"
+                :imgSrc="article.content.featured_image.filename"
+              )
+          template(v-else)
             div(v-for="(_, i) in list" :key="i")
               TileSkeleton
-
-        dl.space-y-10(class='sm:space-y-0 sm:grid sm:grid-cols-2 lg:grid-cols-3 sm:gap-8')
-          div(v-for="article in articles" :key="article.id")
-            PostTile(
-              :link="`/${article.full_slug}`"
-              :category="article[0]"
-              :title="article.content.title"
-              :published_at="article.published_at"
-              :imgSrc="article.content.featured_image.filename"
-            )
 
   Pagination(
     :options="opts"
