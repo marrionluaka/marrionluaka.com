@@ -1,7 +1,6 @@
 <template lang="pug">
 .article.container.my-12.mx-auto.px-4.pb-20(class="lg:px-52 xl:px-64")
   ProgressBar
-  SocialSharing
   transition(name="fade")
     Preloader(v-if="isLoading")
 
@@ -24,6 +23,8 @@
             svg.w-6.h-6(fill='none' stroke='currentColor' viewbox='0 0 24 24' xmlns='http://www.w3.org/2000/svg')
               path(stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z')
           p.text-sm(class="md:text-lg") {{ article.reading_time || '12' }} minutes
+
+      SocialSharing
 
       figure.article-header__image(v-if="article.featured_image")
         .flex.flex-col.justify-center

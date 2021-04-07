@@ -1,14 +1,13 @@
 <template lang="pug">
-.fixed.left-0.share-btn
-  .flex.flex-row(class="sm:flex-col")
-    a.btn.btn-fb.cursor-pointer.border-none.w-12.h-12.flex.justify-center.items-center(data-id='fb')
-      font-awesome-icon.text-white.text-2xl(:icon="faFacebookF")
-    a.btn.btn-wa.cursor-pointer.border-none.w-12.h-12.flex.justify-center.items-center(data-id='wa')
-      font-awesome-icon.text-white.text-2xl(:icon="faWhatsapp")
-    a.btn.btn-linkedin.cursor-pointer.border-none.w-12.h-12.flex.justify-center.items-center(data-id='in')
-      font-awesome-icon.text-white.text-2xl(:icon="faLinkedinIn")
-    a.btn.btn-reddit.cursor-pointer.border-none.w-12.h-12.flex.justify-center.items-center(data-id='re')
-      font-awesome-icon.text-white.text-2xl(:icon="faRedditAlien")
+.flex.items-center.justify-center.pb-4.space-x-2
+  a.btn.btn-fb.cursor-pointer.border-none.w-8.h-8.flex.justify-center.items-center.rounded-full(data-id='fb')
+    font-awesome-icon.text-white.text-lg(:icon="faFacebookF")
+  a.btn.btn-wa.cursor-pointer.border-none.w-8.h-8.flex.justify-center.items-center.rounded-full(data-id='wa')
+    font-awesome-icon.text-white.text-lg(:icon="faWhatsapp")
+  a.btn.btn-linkedin.cursor-pointer.border-none.w-8.h-8.flex.justify-center.items-center.rounded-full(data-id='in')
+    font-awesome-icon.text-white.text-lg(:icon="faLinkedinIn")
+  a.btn.btn-reddit.cursor-pointer.border-none.w-8.h-8.flex.justify-center.items-center.rounded-full(data-id='re')
+    font-awesome-icon.text-white.text-lg(:icon="faRedditAlien")
 </template>
 
 <script lang="ts">
@@ -34,22 +33,24 @@ export default defineComponent({
 </script>
 
 <style lang="stylus" scoped>
-.share-btn
-  left 0
-  bottom 0
-  +breakpoint('sm')
-    top 50%
-    transform translate(0%, -50%)
-
 .btn
+  border 1px solid
   path
-    color white
-  &-fb
-    background-color $fb-blue
-  &-wa
-    background-color $wa-green
-  &-linkedin
-    background-color $li-blue
-  &-reddit
-    background-color $reddit-red
+    color #1d1d1f
+  &-fb:hover
+    border-color $fb-blue
+    path
+      color $fb-blue
+  &-wa:hover
+    border-color $wa-green
+    path
+      color $wa-green
+  &-linkedin:hover
+    border-color $li-blue
+    path
+      color $li-blue
+  &-reddit:hover
+    border-color $reddit-red
+    path
+      color $reddit-red
 </style>
