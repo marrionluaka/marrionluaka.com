@@ -41,6 +41,11 @@
     section.article-series(v-if="article.series" v-html="md.render(article.series)")
     TableOfContent(v-if="article.toc" :content="md.render(article.toc)")
     PostContent(:content="md.render(article.body)")
+
+    .flex.items-center.justify-center.py-8
+      a(href='https://www.buymeacoffee.com/marrionluaka' target='_blank')
+        img(src='https://cdn.buymeacoffee.com/buttons/default-orange.png' alt='Buy Me A Coffee' height='41' width='174')
+
     RelatedPosts(:uuid="uuid")
     Disqus
 </template>
