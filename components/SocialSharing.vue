@@ -17,12 +17,6 @@ import { defineComponent, computed } from '@vue/composition-api'
 import { faWhatsapp, faRedditAlien, faFacebookF, faLinkedinIn, faTwitter } from '@fortawesome/free-brands-svg-icons'
 
 export default defineComponent({
-  head() {
-    return {
-      script: [{ src: '/share-buttons.js' }]
-    }
-  },
-
   setup() {
     return {
       faTwitter: computed(() => faTwitter),

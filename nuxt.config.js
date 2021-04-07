@@ -7,6 +7,10 @@ export default {
   head: {
     title: 'Marrion Luaka',
     script: [
+      {
+        src: '/share-buttons.js',
+        defer: true
+      },
       { 
         src: 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js',
         'data-ad-client': 'ca-pub-5157989864167195',
