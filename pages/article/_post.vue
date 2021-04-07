@@ -42,6 +42,7 @@
     TableOfContent(v-if="article.toc" :content="md.render(article.toc)")
     PostContent(:content="md.render(article.body)")
     RelatedPosts(:uuid="uuid")
+    Disqus
 </template>
 
 <script lang="ts">
