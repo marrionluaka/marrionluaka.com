@@ -112,7 +112,7 @@ export default defineComponent({
 </script>
 
 <style lang="stylus" scoped>
-@import '~/assets/styl/_transitions.styl'
+// @import '~/assets/styl/_transitions.styl'
 
 .article
   &-header
