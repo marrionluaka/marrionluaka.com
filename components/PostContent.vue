@@ -82,11 +82,9 @@ export default defineComponent({
   >>> pre
     overflow auto
     width 100%
-    max-width 744px
     padding 32px
     font-size 13px
     border-radius 5px
-    font-family "Operator Mono", Consolas, Menlo, Monaco, source-code-pro, "Courier New", monospace
     background rgb(41, 44, 52)
 
   >>> pre, >>> code
