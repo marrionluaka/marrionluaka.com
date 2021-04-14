@@ -6,19 +6,19 @@ export default {
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
     title: 'Marrion Luaka',
-    script: [
-      { 
-        src: 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js',
-        'data-ad-client': 'ca-pub-5157989864167195',
-        defer: true
-      }
-    ],
+    // script: [
+    //   { 
+    //     src: 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js',
+    //     'data-ad-client': 'ca-pub-5157989864167195',
+    //     defer: true
+    //   }
+    // ],
     htmlAttrs: {
       lang: 'en'
     },
     meta: [
       { charset: 'utf-8' },
-      { name: 'monetization', content: '$ilp.uphold.com/7fNpxDJkxMmq' },
+      // { name: 'monetization', content: '$ilp.uphold.com/7fNpxDJkxMmq' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1, shrink-to-fit=no' },
       {
         hid: "description",
