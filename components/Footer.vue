@@ -10,6 +10,9 @@
         .footer__media
           ul.icons.flex.mt-4(class="md:mt-0")
             li.mr-4
+              a(href='https://jsfiddle.net/user/MarrionLulu/fiddles/' target='_blank')
+                font-awesome-icon.w-6.h-6.icons__linkedin(:icon="['fab', 'jsfiddle']")
+            li.mr-4
               a(href='https://linkedin.com/in/marrionluaka' target='_blank')
                 font-awesome-icon.w-6.h-6.icons__linkedin(:icon="['fab', 'linkedin']")
             li
